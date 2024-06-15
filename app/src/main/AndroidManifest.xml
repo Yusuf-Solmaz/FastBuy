@@ -13,6 +13,11 @@
         android:theme="@style/Theme.Yusuf_Mucahit_Solmaz_Final"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.detailPage.DetailActivity"
+            android:exported="false"
+            android:theme="@style/ActivityDetailTheme"
+            />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
