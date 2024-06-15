@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt.plugin)
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -38,9 +41,11 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
+        viewBinding = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.11"
     }
     packaging {
         resources {
@@ -66,4 +71,32 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp (libs.androidx.room.compiler)
+
+    implementation (libs.retrofit)
+    implementation (libs.okhttp)
+    implementation (libs.retrofit.converter)
+    implementation(libs.okhttp.logging.interceptor)
+
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    implementation (libs.gson)
+
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    implementation(libs.lottie.compose)
+
+
+    implementation(libs.androidx.datastore.preferences)
+
+    implementation(libs.androidx.core.splashscreen)
+
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+
 }
