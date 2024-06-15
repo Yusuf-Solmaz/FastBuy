@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "102977788151",
+    "project_id": "turkcell-final",
+    "storage_bucket": "turkcell-final.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:102977788151:android:c84c6f1e451ab572b5dbf2",
+        "android_client_info": {
+          "package_name": "com.yusuf.yusuf_mucahit_solmaz_final"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSr1YTuqvpNiEvel3aqzL9yxhEpxqWI8Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
