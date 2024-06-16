@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.category.RootCategoryItem
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.product.Product
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.ItemProductBinding
 
-class ProductAdapter(private val products: List<Product>,private val context: Context) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter(private val products: ArrayList<Product>,private val context: Context) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
     class ProductViewHolder(val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root) {
 
     }
@@ -37,6 +38,12 @@ class ProductAdapter(private val products: List<Product>,private val context: Co
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(productImage)
         }
+    }
+
+    fun updateProducts(newProducts: List<Product>) {
+        products.clear()
+        products.addAll(newProducts)
+        notifyDataSetChanged()
     }
 
 

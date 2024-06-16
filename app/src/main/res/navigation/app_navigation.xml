@@ -9,7 +9,14 @@
         android:id="@+id/nav_home"
         android:name="com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+
+        <argument
+            android:name="category"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="default" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_gallery"
@@ -22,4 +29,18 @@
         android:name="com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/nav_favorites"
+        android:name="com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.favorites.FavoritesFragment"
+        android:label="@string/menu_favorites"
+        tools:layout="@layout/fragment_favorites" />
+    <fragment
+        android:id="@+id/nav_category"
+        android:name="com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.category.CategoryFragment"
+        android:label="@string/menu_category"
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_nav_category_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
 </navigation>

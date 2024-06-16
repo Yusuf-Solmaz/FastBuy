@@ -3,6 +3,8 @@ package com.yusuf.yusuf_mucahit_solmaz_final.di
 import android.content.Context
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.network.ApiService
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getProductUseCase.GetProductUseCase
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getProductsByCategory.GetProductsByCategoryUseCase
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getProductsCategory.GetProductsCategoryUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,4 +22,13 @@ object AppModule {
         return GetProductUseCase(apiService)
     }
 
+    @Provides
+    fun provideGetProductsCategoryUseCase(apiService: ApiService): GetProductsCategoryUseCase {
+        return GetProductsCategoryUseCase(apiService)
+    }
+
+    @Provides
+    fun getProductsByCategoryUseCase(apiService: ApiService): GetProductsByCategoryUseCase {
+        return GetProductsByCategoryUseCase(apiService)
+    }
 }
