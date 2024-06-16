@@ -20,6 +20,8 @@
         android:id="@+id/loading_animation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
         android:visibility="gone"
         app:lottie_rawRes="@raw/general_loading_lottie"
         app:layout_constraintTop_toTopOf="parent"
