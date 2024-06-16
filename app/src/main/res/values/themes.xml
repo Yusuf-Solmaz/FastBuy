@@ -2,5 +2,15 @@
 <resources>
 
     <style name="Theme.Yusuf_Mucahit_Solmaz_Final" parent="android:Theme.Material.Light.NoActionBar" />
-    <style name="ActivityDetailTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
+
+    <style name="ActivityDetailTheme" parent="Theme.AppCompat.Light.NoActionBar" />
+
+    <style name="Theme.Yusuf_Mucahit_Solmaz_Final.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Yusuf_Mucahit_Solmaz_Final.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Yusuf_Mucahit_Solmaz_Final.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

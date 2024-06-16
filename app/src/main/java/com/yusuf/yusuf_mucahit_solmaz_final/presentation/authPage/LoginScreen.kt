@@ -20,11 +20,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.yusuf.yusuf_mucahit_solmaz_final.R
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.authPage.viewModel.AuthViewModel
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.components.ButtonComponent
@@ -34,7 +32,7 @@ import com.yusuf.yusuf_mucahit_solmaz_final.presentation.components.Loader
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.components.PasswordFieldComponent
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.components.TextFieldComponent
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.components.UnderLinedTextComponent
-import com.yusuf.yusuf_mucahit_solmaz_final.presentation.detailPage.DetailActivity
+import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.TransactionsActivity
 
 @Composable
 fun LoginScreen(
@@ -61,7 +59,7 @@ fun LoginScreen(
 
     LaunchedEffect(uiState.user) {
         uiState.user?.let {
-            val intent = Intent(context, DetailActivity::class.java)
+            val intent = Intent(context, TransactionsActivity::class.java)
             context.startActivity(intent)
 
         }
@@ -69,7 +67,7 @@ fun LoginScreen(
 
     LaunchedEffect(loggingState.transaction) {
         if (loggingState.transaction) {
-            val intent = Intent(context, DetailActivity::class.java)
+            val intent = Intent(context, TransactionsActivity::class.java)
             context.startActivity(intent)
         }
     }

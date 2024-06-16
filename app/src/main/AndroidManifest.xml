@@ -14,10 +14,10 @@
         android:theme="@style/Theme.Yusuf_Mucahit_Solmaz_Final"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.detailPage.DetailActivity"
+            android:name=".presentation.drawer.TransactionsActivity"
             android:exported="false"
-            android:theme="@style/ActivityDetailTheme"
-            />
+            android:label="@string/title_activity_main"
+            android:theme="@style/ActivityDetailTheme" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
