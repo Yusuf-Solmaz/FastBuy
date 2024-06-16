@@ -4,12 +4,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.category.RootCategoryItem
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.product.Product
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.ItemProductBinding
+import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home.HomeFragmentDirections
 
 class ProductAdapter(private val products: ArrayList<Product>,private val context: Context) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
     class ProductViewHolder(val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -37,9 +39,15 @@ class ProductAdapter(private val products: ArrayList<Product>,private val contex
                 .load(products[position].images[0])
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(productImage)
+
+            cardView.setOnClickListener {
+                val action = HomeFragmentDirections.actionNavHomeToDetailFragment(products[position].id.toString())
+                it.findNavController().navigate(action)
+            }
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateProducts(newProducts: List<Product>) {
         products.clear()
         products.addAll(newProducts)
