@@ -16,5 +16,6 @@
     <color name="first_text_color">#4e82ee</color>
     <color name="second_text_color">#be6a96</color>
     <color name="third_text_color">#c4c7c5</color>
+    <color name="mainColor">#A1A1FF</color>
 
 </resources>

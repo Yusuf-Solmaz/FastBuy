@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        productAdapter = ProductAdapter(emptyList())
+        productAdapter = ProductAdapter(emptyList(),requireContext())
         binding.rvProducts.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = productAdapter
@@ -55,7 +55,7 @@ class HomeFragment : Fragment() {
                     binding.loadingAnimation.visibility = View.GONE
                     binding.errorMessage.visibility = View.GONE
                     binding.rvProducts.visibility = View.VISIBLE
-                    productAdapter = ProductAdapter(state.productResponse.products)
+                    productAdapter = ProductAdapter(state.productResponse.products,requireContext())
                     binding.rvProducts.adapter = productAdapter
                 }
             }
