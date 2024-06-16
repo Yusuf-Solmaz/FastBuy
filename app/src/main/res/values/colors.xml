@@ -7,4 +7,14 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="top_app_bar_icon_bg">#FFE0DE</color>
+    <color name="top_app_bar_icon_fg">#FF5E77</color>
+    <color name="ai_chat_bubble">#e6e6e9</color>
+    <color name="favorite_card_color">#f0eff4</color>
+    <color name="bottom_chat">#e7ecef</color>
+    <color name="loading_component">#66666e</color>
+    <color name="first_text_color">#4e82ee</color>
+    <color name="second_text_color">#be6a96</color>
+    <color name="third_text_color">#c4c7c5</color>
+
 </resources>
