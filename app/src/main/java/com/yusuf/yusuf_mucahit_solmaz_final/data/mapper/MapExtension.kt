@@ -22,9 +22,10 @@ fun String.formatDate(): String {
 
 fun Product.toFavoriteProduct(): FavoriteProducts {
     return FavoriteProducts(
-        productId = id,
-        productImage = images[0],
-        rating = rating,
-        title = title
+        productId = this.id,
+        productImage = this.images[0],
+        rating = this.rating,
+        title = this.title,
+        description = this.description
     )
 }
