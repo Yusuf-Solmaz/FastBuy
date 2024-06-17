@@ -23,7 +23,7 @@ class FavoritesAdapter(private val favoriteProducts: ArrayList<FavoriteProducts>
                 val position = adapterPosition
                 if (position == RecyclerView.NO_POSITION) return@setOnClickListener
 
-                // Toggle the expanded state
+
                 expandedPosition = if (expandedPosition == position) -1 else position
                 notifyDataSetChanged()
             }
@@ -36,17 +36,18 @@ class FavoritesAdapter(private val favoriteProducts: ArrayList<FavoriteProducts>
     }
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
-        val product = favoriteProducts[position]
+        val favoriteProduct = favoriteProducts[position]
         holder.binding.apply {
-            title.text = product.title
-            starRate.text = product.rating.toString()
-            Glide.with(productImage.context).load(product.productImage).into(productImage)
+            title.text = favoriteProduct.title
+            starRate.text = favoriteProduct.rating.toString()
+            Glide.with(productImage.context).load(favoriteProduct.productImage).into(productImage)
 
-            // Handle expansion logic
+
             expandedDescription.visibility = if (position == expandedPosition) View.VISIBLE else View.GONE
             viewAllDetailsBtn.visibility = if (position == expandedPosition) View.VISIBLE else View.GONE
+            expandedDescription.text= favoriteProduct.description
             viewAllDetailsBtn.setOnClickListener {
-                val action = FavoritesFragmentDirections.actionNavFavoritesToDetailFragment(product.productId.toString())
+                val action = FavoritesFragmentDirections.actionNavFavoritesToDetailFragment(favoriteProduct.productId.toString())
                 it.findNavController().navigate(action)
             }
 
