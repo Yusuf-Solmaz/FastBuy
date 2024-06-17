@@ -22,21 +22,14 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-    <fragment
         android:id="@+id/nav_favorites"
         android:name="com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.favorites.FavoritesFragment"
         android:label="@string/menu_favorites"
-        tools:layout="@layout/fragment_favorites" />
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_nav_favorites_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_category"
         android:name="com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.category.CategoryFragment"
