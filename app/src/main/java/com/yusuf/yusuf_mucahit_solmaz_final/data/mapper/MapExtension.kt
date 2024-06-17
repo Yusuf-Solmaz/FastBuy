@@ -1,5 +1,7 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.data.mapper
 
+import com.yusuf.yusuf_mucahit_solmaz_final.data.local.model.FavoriteProducts
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.product.Product
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -16,4 +18,13 @@ fun String.formatDate(): String {
     } catch (e: Exception) {
         this
     }
+}
+
+fun Product.toFavoriteProduct(): FavoriteProducts {
+    return FavoriteProducts(
+        productId = id,
+        productImage = images[0],
+        rating = rating,
+        title = title
+    )
 }
