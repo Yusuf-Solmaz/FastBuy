@@ -36,15 +36,24 @@ class TransactionsActivity : AppCompatActivity() {
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.nav_favorites
+                R.id.nav_home, R.id.nav_favorites, R.id.nav_category
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.nav_favorites) {
+                binding.appBarMain.toolbar.setBackgroundResource(R.drawable.favorites_appbar_bg)
+            }
+            else{
+                binding.appBarMain.toolbar.setBackgroundResource(R.drawable.appbar_bg)
+            }
+        }
     }
 
 

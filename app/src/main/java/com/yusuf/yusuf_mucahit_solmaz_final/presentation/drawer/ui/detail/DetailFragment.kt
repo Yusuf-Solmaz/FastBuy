@@ -13,6 +13,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.yusuf.yusuf_mucahit_solmaz_final.R
+import com.yusuf.yusuf_mucahit_solmaz_final.data.local.model.FavoriteProducts
+import com.yusuf.yusuf_mucahit_solmaz_final.data.mapper.toFavoriteProduct
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.FragmentDetailBinding
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.detail.adapter.CommentsAdapter
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home.HomeFragmentArgs
@@ -25,11 +27,10 @@ class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
     private val viewModel: DetailViewModel by viewModels()
     private val args: DetailFragmentArgs by navArgs()
-    private lateinit var commentAdapter : CommentsAdapter
+    private lateinit var commentAdapter: CommentsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -38,7 +39,6 @@ class DetailFragment : Fragment() {
     ): View {
         binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     @SuppressLint("SetTextI18n", "UseCompatLoadingForColorStateLists")
@@ -53,9 +53,10 @@ class DetailFragment : Fragment() {
 
         val id = args.id
 
-
+        // Get product details
         viewModel.getProductById(id)
 
+        // Observe product details
         viewModel.productDetail.observe(viewLifecycleOwner) { state ->
             when {
                 state.isLoading -> {
@@ -81,7 +82,7 @@ class DetailFragment : Fragment() {
                         discount.text = "(-%${state.productResponse.discountPercentage})"
                         rating.text = state.productResponse.rating.toString()
 
-                       Glide.with(requireContext())
+                        Glide.with(requireContext())
                             .load(state.productResponse.images[0])
                             .into(productImage)
                             .clearOnDetach()
@@ -98,18 +99,30 @@ class DetailFragment : Fragment() {
 
                         textView2.paintFlags = textView2.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
 
-
                         val oldPrice = state.productResponse.price / (1 - state.productResponse.discountPercentage / 100)
                         val decimalFormat = DecimalFormat("#.##")
                         val formattedPrice = decimalFormat.format(oldPrice)
                         textView2.text = ("$formattedPrice$")
 
+
+                        viewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
+
+                            binding.checkBox.setOnCheckedChangeListener(null)
+                            binding.checkBox.isChecked = isFavorite
+
+                            binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
+                                val favoriteProduct = state.productResponse.toFavoriteProduct()
+                                if (isChecked) {
+                                    viewModel.addOrRemoveFavorite(favoriteProduct)
+                                } else {
+                                    viewModel.addOrRemoveFavorite(favoriteProduct)
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
-
     }
-
-
 }
+
