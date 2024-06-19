@@ -48,4 +48,9 @@
             android:name="id"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_cart"
+        android:name="com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.cart.CartFragment"
+        android:label="@string/menu_cart"
+        tools:layout="@layout/fragment_cart" />
 </navigation>
