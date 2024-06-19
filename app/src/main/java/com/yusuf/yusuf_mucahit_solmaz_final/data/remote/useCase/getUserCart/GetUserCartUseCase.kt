@@ -8,11 +8,8 @@ class GetUserCartUseCase @Inject constructor(
     private val apiService: ApiService
 ) {
 
-    fun getUserCardById(userId: Int =1) = rootFlow {
+    fun getUserCardById(userId: Int =6) = rootFlow {
         apiService.getUserCartByUserId(userId)
     }
 
-    fun getUserCart() = rootFlow {
-        apiService.getUserCart()
-    }
 }
