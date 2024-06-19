@@ -95,7 +95,7 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun addToCart(addCartRequest: AddCartRequest,onSuccess:()->Unit) {
+    fun addToCart(addCartRequest: AddCartRequest) {
         _addToCartState.value = AddToCartState(isLoading = true)
         viewModelScope.launch {
             addToCartUseCase.addToCart(addCartRequest).collect { result ->
@@ -120,7 +120,7 @@ class DetailViewModel @Inject constructor(
                     }
                     is GeneralResult.Success -> {
                         Log.d("addToCart", "addToCart: ${result.data}")
-                        onSuccess()
+
                         _addToCartState.postValue(
                             AddToCartState(
                                 isLoading = false,

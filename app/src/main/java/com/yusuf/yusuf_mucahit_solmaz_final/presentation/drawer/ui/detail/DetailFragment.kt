@@ -59,9 +59,6 @@ class DetailFragment : Fragment() {
         }
 
 
-
-
-
         val id = args.id
 
         // Get product details
@@ -130,6 +127,21 @@ class DetailFragment : Fragment() {
                                 }
                             }
                         }
+
+                        viewModel.addToCartState.observe(viewLifecycleOwner) { state ->
+                            when {
+                                state.isLoading -> {
+
+                                }
+                                state.error != null -> {
+
+                                }
+                                state.success != null -> {
+                                    Toast.makeText(requireContext(), "Added to cart", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+
+                        }
                     }
                     binding.addToCart.setOnClickListener {
                         showAddToCartDialog(product = state.productResponse)
@@ -159,9 +171,7 @@ class DetailFragment : Fragment() {
                 else if (quantity > 0) {
                     val cartProduct = product.toAddCartRequest(quantity.toString())
                     Log.d("cartProduct", "showAddToCartDialog: $cartProduct")
-                    viewModel.addToCart(cartProduct) {
-                        Toast.makeText(requireContext(), "${product.title} added to cart", Toast.LENGTH_SHORT).show()
-                    }
+                    viewModel.addToCart(cartProduct)
                     dialog.dismiss()
                 } else {
                     Toast.makeText(requireContext(), "Please enter a valid quantity", Toast.LENGTH_SHORT).show()
