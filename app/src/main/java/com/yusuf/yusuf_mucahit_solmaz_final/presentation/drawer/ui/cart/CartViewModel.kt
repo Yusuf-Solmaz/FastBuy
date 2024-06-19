@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CartViewModel @Inject constructor(
-    private val getUserCartUseCase: GetUserCartUseCase
+    private val getUserCartUseCase: GetUserCartUseCase,
 ) : ViewModel() {
 
     private val _cart = MutableLiveData<CartState>()
@@ -22,7 +22,7 @@ class CartViewModel @Inject constructor(
     fun getUserCart() {
         _cart.value = CartState(isLoading = true)
         viewModelScope.launch {
-            getUserCartUseCase.getUserCart().collect { result ->
+            getUserCartUseCase.getUserCardById().collect { result ->
                 when(result){
                     is GeneralResult.Error -> {
                         _cart.postValue(CartState(
