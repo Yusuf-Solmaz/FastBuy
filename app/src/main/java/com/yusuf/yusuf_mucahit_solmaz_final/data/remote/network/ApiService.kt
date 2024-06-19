@@ -5,12 +5,15 @@ import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.cart.AddCartRe
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.category.RootCategoryResponse
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.product.Product
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.product.RootProductResponse
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.profile.RootProfile
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.profile.UpdateUserProfileRequest
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.userCart.RootUserCart
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface ApiService {
@@ -32,10 +35,19 @@ interface ApiService {
     suspend fun addToCart(@Body request: AddCartRequest): Response<AddCartResponse>
 
 
-    @GET("carts/user/{userId}")
+    @GET("users/{userId}/carts")
     suspend fun getUserCartByUserId(@Path("userId") userId: Int): Response<RootUserCart>
 
-    @GET("carts")
-    suspend fun getUserCart(): Response<RootUserCart>
+    @GET("users/{userId}")
+    suspend fun getUserProfile(@Path("userId") userId: Int): Response<RootProfile>
+
+    @Headers("Content-Type: application/json")
+    @PUT("users/{userId}")
+    suspend fun updateUserProfile(
+        @Path("userId") userId: Int,
+        @Body request: UpdateUserProfileRequest
+    ): Response<RootProfile>
+
+
 
 }

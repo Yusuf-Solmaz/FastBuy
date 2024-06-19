@@ -8,6 +8,8 @@ import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getProductUseCas
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getProductsByCategory.GetProductsByCategoryUseCase
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getProductsCategory.GetProductsCategoryUseCase
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getUserCart.GetUserCartUseCase
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getUserProfile.GetUserProfileUseCase
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.updateUserProfile.UpdateUserProfileUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -48,5 +50,17 @@ object AppModule {
     @Provides
     fun getUserCard(apiService: ApiService): GetUserCartUseCase{
         return GetUserCartUseCase(apiService)
+    }
+
+    @Provides
+    fun getUserProfile(apiService: ApiService): GetUserProfileUseCase {
+        return GetUserProfileUseCase(apiService)
+
+    }
+
+    @Provides
+    fun updateProfile(apiService: ApiService): UpdateUserProfileUseCase {
+        return UpdateUserProfileUseCase(apiService)
+
     }
 }
