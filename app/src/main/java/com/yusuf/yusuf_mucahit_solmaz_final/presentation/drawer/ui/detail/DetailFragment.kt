@@ -1,6 +1,7 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.detail
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
@@ -8,14 +9,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.yusuf.yusuf_mucahit_solmaz_final.R
 import com.yusuf.yusuf_mucahit_solmaz_final.data.local.model.FavoriteProducts
+import com.yusuf.yusuf_mucahit_solmaz_final.data.mapper.toAddCartRequest
 import com.yusuf.yusuf_mucahit_solmaz_final.data.mapper.toFavoriteProduct
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.product.Product
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.FragmentDetailBinding
+import com.yusuf.yusuf_mucahit_solmaz_final.di.AppModule.addToCart
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.detail.adapter.CommentsAdapter
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home.HomeFragmentArgs
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,6 +57,10 @@ class DetailFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = commentAdapter
         }
+
+
+
+
 
         val id = args.id
 
@@ -120,9 +131,48 @@ class DetailFragment : Fragment() {
                             }
                         }
                     }
+                    binding.addToCart.setOnClickListener {
+                        showAddToCartDialog(product = state.productResponse)
+                    }
                 }
             }
         }
     }
+
+    private fun showAddToCartDialog(product: Product) {
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_to_cart, null)
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .create()
+
+        val etQuantity = dialogView.findViewById<EditText>(R.id.et_quantity)
+        val btnAddToCart = dialogView.findViewById<Button>(R.id.btn_add_to_cart)
+
+        btnAddToCart.setOnClickListener {
+            val quantity = etQuantity.text.toString().toIntOrNull()
+
+            if (quantity != null) {
+                if (quantity.toInt() > product.stock){
+                    Toast.makeText(requireContext(), "Quantity must be less than or equal to stock", Toast.LENGTH_SHORT).show()
+
+                }
+                else if (quantity > 0) {
+                    val cartProduct = product.toAddCartRequest(quantity.toString())
+                    Log.d("cartProduct", "showAddToCartDialog: $cartProduct")
+                    viewModel.addToCart(cartProduct) {
+                        Toast.makeText(requireContext(), "${product.title} added to cart", Toast.LENGTH_SHORT).show()
+                    }
+                    dialog.dismiss()
+                } else {
+                    Toast.makeText(requireContext(), "Please enter a valid quantity", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+
+        }
+
+        dialog.show()
+    }
 }
+
 
