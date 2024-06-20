@@ -51,34 +51,46 @@ class CartFragment : Fragment() {
             adapter = cartAdapter
         }
 
-        viewModel.cart.observe(viewLifecycleOwner, Observer {
-            state->
-            when {
-                state.isLoading -> {
-                    binding.loadingAnimation.visibility = View.VISIBLE
-                    binding.errorMessage.visibility = View.GONE
-                    binding.rvCart.visibility = View.GONE
-                }
+        viewModel.cart.observe(viewLifecycleOwner, Observer { state ->
+            try {
+                when {
+                    state.isLoading -> {
+                        binding.loadingAnimation.visibility = View.VISIBLE
+                        binding.errorMessage.visibility = View.GONE
+                        binding.rvCart.visibility = View.GONE
 
-                state.error != null -> {
-                    binding.loadingAnimation.visibility = View.GONE
-                    binding.errorMessage.visibility = View.VISIBLE
-                    binding.errorMessage.text = state.error
-                    binding.rvCart.visibility = View.GONE
-                }
+                    }
+                    state.error != null -> {
+                        binding.loadingAnimation.visibility = View.GONE
+                        binding.errorMessage.visibility = View.VISIBLE
+                        binding.errorMessage.text = state.error
+                        binding.rvCart.visibility = View.GONE
+                    }
+                    state.cartResponse != null -> {
+                        binding.loadingAnimation.visibility = View.GONE
+                        binding.errorMessage.visibility = View.GONE
+                        binding.rvCart.visibility = View.VISIBLE
+                        try {
+                            val carts = state.cartResponse.carts
+                            if (carts.isNotEmpty()) {
+                                binding.errorEmptyText.visibility = View.GONE
+                                cartAdapter.updateProducts(carts[0].products)
+                                binding.totalPrice.text = "Total: ${carts[0].total}$"
+                            } else {
+                               binding.errorEmptyText.visibility = View.VISIBLE
+                                Log.e("CartFragment", "Carts list is  empty.")
+                            }
+                        } catch (e: Exception) {
+                            Log.e("CartFragment", "Error updating cart adapter: ${e.message}")
+                        }
 
-                state.cartResponse != null -> {
-                    binding.loadingAnimation.visibility = View.GONE
-                    binding.errorMessage.visibility = View.GONE
-                    binding.rvCart.visibility = View.VISIBLE
-                    cartAdapter.updateProducts(state.cartResponse.carts[0].products)
-
-                    binding.totalPrice.text= ("Total: ${state.cartResponse.carts[0].total}$")
-
-                    binding.payButton.setOnClickListener {
-                        showConfirmationDialog()
+                        binding.payButton.setOnClickListener {
+                            showConfirmationDialog()
+                        }
                     }
                 }
+            } catch (e: Exception) {
+                Log.e("CartFragment", "Error observing cart state: ${e.message}")
             }
         })
 
