@@ -22,9 +22,7 @@ class HomeViewModel @Inject constructor(
     val products: LiveData<ProductState> = _products
 
 
-    init {
-        getProduct()
-    }
+
 
      fun getProduct() {
         _products.value = ProductState(isLoading = true)
