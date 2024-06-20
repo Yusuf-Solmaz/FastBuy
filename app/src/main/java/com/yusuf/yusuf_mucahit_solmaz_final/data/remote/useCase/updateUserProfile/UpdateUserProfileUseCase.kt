@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class UpdateUserProfileUseCase @Inject constructor(private val apiService: ApiService){
 
-    fun updateUserProfile(userId: Int = 6, request: UpdateUserProfileRequest) = rootFlow {
+    fun updateUserProfile(userId: Int, request: UpdateUserProfileRequest) = rootFlow {
         apiService.updateUserProfile(userId, request)
     }
 

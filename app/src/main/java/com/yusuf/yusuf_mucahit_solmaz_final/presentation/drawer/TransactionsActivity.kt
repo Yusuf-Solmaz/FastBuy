@@ -1,5 +1,6 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
 import androidx.activity.enableEdgeToEdge
@@ -12,16 +13,26 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.yusuf.yusuf_mucahit_solmaz_final.R
+import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.repo.UserSessionRepository
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.ActivityTransactionsBinding
+import com.yusuf.yusuf_mucahit_solmaz_final.databinding.NavHeaderMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class TransactionsActivity : AppCompatActivity() {
+class TransactionsActivity: AppCompatActivity() {
+
+    @Inject
+    lateinit var session: UserSessionRepository
+
+
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityTransactionsBinding
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,9 +50,11 @@ class TransactionsActivity : AppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_favorites, R.id.nav_category
+                R.id.nav_home, R.id.nav_category,R.id.nav_favorites, R.id.nav_cart,R.id.nav_profile
             ), drawerLayout
         )
+
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
@@ -54,6 +67,17 @@ class TransactionsActivity : AppCompatActivity() {
                 binding.appBarMain.toolbar.setBackgroundResource(R.drawable.appbar_bg)
             }
         }
+
+        val headerView = navView.getHeaderView(0)
+        val navHeaderMainBinding = NavHeaderMainBinding.bind(headerView)
+
+        navHeaderMainBinding.currentUserName.text = session.getUser()?.username
+        navHeaderMainBinding.currentUserEmail.text = session.getUser()?.email
+
+        Glide.with(this)
+            .load(session.getUser()?.image)
+            .into(navHeaderMainBinding.imageView)
+            .clearOnDetach()
     }
 
 

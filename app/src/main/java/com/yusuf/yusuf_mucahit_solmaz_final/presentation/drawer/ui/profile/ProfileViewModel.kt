@@ -1,12 +1,13 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.profile
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.yusuf.yusuf_mucahit_solmaz_final.core.AppResult.GeneralResult
-import com.yusuf.yusuf_mucahit_solmaz_final.data.mapper.toUpdateUserProfileRequest
+import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.repo.UserSessionRepository
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.profile.RootProfile
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.profile.UpdateUserProfileRequest
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getUserProfile.GetUserProfileUseCase
@@ -18,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val getUserProfileUseCase: GetUserProfileUseCase,
-    private val updateUserProfileUseCase: UpdateUserProfileUseCase
+    private val updateUserProfileUseCase: UpdateUserProfileUseCase,
+    private val session: UserSessionRepository
 ): ViewModel() {
 
     private val _profile = MutableLiveData<ProfileState>()
@@ -27,12 +29,17 @@ class ProfileViewModel @Inject constructor(
     private val _updateProfile = MutableLiveData<UpdateProfileState>()
     val updateProfile: LiveData<UpdateProfileState> = _updateProfile
 
+    init {
+        Log.d("sessionProfile", "init: ${session.getUserId()}")
+    }
+
     fun getUserProfile() {
         _profile.value = ProfileState(isLoading = true)
         viewModelScope.launch {
-            getUserProfileUseCase.getUserProfile().collect { result ->
+            getUserProfileUseCase.getUserProfile(session.getUserId()).collect { result ->
                 when (result) {
                     is GeneralResult.Error -> {
+                        Log.d("getUserProfile", "getUserProfile: ${result.message}")
                         _profile.postValue(
                             ProfileState(
                                 error = result.message,
@@ -43,6 +50,7 @@ class ProfileViewModel @Inject constructor(
                     }
 
                     GeneralResult.Loading -> {
+                        Log.d("getUserProfile", "getUserProfile: Loading")
                         _profile.postValue(
                             ProfileState(
                                 isLoading = true,
@@ -53,6 +61,7 @@ class ProfileViewModel @Inject constructor(
                     }
 
                     is GeneralResult.Success -> {
+                        Log.d("getUserProfile", "getUserProfile: ${result.data}")
                         _profile.postValue(
                             ProfileState(
                                 isLoading = false,
@@ -69,7 +78,7 @@ class ProfileViewModel @Inject constructor(
     fun updateUserProfile(profileRequest: UpdateUserProfileRequest) {
         _updateProfile.value = UpdateProfileState(isLoading = true)
         viewModelScope.launch {
-            updateUserProfileUseCase.updateUserProfile(request = profileRequest)
+            updateUserProfileUseCase.updateUserProfile(userId = session.getUserId(),request = profileRequest)
                 .collect { result ->
                     when (result) {
                         is GeneralResult.Error -> {

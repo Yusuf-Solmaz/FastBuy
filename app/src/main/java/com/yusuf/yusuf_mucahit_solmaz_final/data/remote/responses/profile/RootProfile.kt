@@ -28,5 +28,5 @@ data class RootProfile(
     val university: String,
     val userAgent: String,
     val username: String,
-    val weight: Int
+    val weight: Double
 )
