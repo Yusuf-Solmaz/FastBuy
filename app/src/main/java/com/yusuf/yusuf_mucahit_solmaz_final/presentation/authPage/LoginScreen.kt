@@ -36,43 +36,25 @@ import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.TransactionsActi
 
 @Composable
 fun LoginScreen(
-    navController: NavHostController,
-    onSignUpClick: () -> Unit = {},
     viewModel: AuthViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-    val loggingState by viewModel.loggingState.collectAsState()
+    val authState by viewModel.authState.collectAsState()
+    val sessionState by viewModel.sessionState.collectAsState()
+    val context = LocalContext.current
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    val context = LocalContext.current
 
-    LaunchedEffect(true) {
-        viewModel.isLoggedIn()
-    }
-
-    LaunchedEffect(uiState.error) {
-        uiState.error?.let { errorMessage ->
-            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    LaunchedEffect(uiState.user) {
-        uiState.user?.let {
-            val intent = Intent(context, TransactionsActivity::class.java)
-            context.startActivity(intent)
-
-        }
-    }
-
-    LaunchedEffect(loggingState.transaction) {
-        if (loggingState.transaction) {
+    LaunchedEffect(sessionState.user) {
+        sessionState.user?.let {
             val intent = Intent(context, TransactionsActivity::class.java)
             context.startActivity(intent)
         }
     }
 
-    if (uiState.isLoading || loggingState.isLoading) {
+
+
+    if (authState.isLoading) {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -103,20 +85,15 @@ fun LoginScreen(
                     onValueChange = { updatedPassword -> password = updatedPassword.trim() },
                     painterResource(id = R.drawable.lock_icon)
                 )
-                UnderLinedTextComponent(value = "Forgot your password?", onClick = {
-                    navController.navigate("forgot_password_screen")
-                })
+
                 Spacer(modifier = Modifier.height(10.dp))
                 ButtonComponent(value = "Login", onClick = {
-                    viewModel.signIn(email, password)
+                    viewModel.login(email, password)
                 })
                 Spacer(modifier = Modifier.height(10.dp))
                 DividerTextComponent()
                 Spacer(modifier = Modifier.height(15.dp))
-                ClickableLoginTextComponent(tryToLogin = false, onTextSelected = {
-                    onSignUpClick()
-                    navController.navigate("sign_up_screen")
-                })
+
             }
         }
     }
