@@ -10,13 +10,10 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.yusuf.paparafinalcase.presentation.onBoardingScreen.OnBoardingScreen
 import com.yusuf.yusuf_mucahit_solmaz_final.R
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.SplashScreen.SplashScreen
-import com.yusuf.yusuf_mucahit_solmaz_final.presentation.authPage.ForgotPasswordScreen
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.authPage.LoginScreen
-import com.yusuf.yusuf_mucahit_solmaz_final.presentation.authPage.SignUpScreen
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.components.LoadingLottie
 
 
@@ -49,17 +46,7 @@ fun Navigation(mainViewModel: MainViewModel) {
                 OnBoardingScreen(mainViewModel, navController)
             }
             composable("login_screen") {
-                LoginScreen(navController)
-            }
-            composable(
-                "sign_up_screen",
-            ) {
-              SignUpScreen(navController = navController)
-            }
-            composable(
-                "forgot_password_screen",
-            ) {
-                ForgotPasswordScreen(navController = navController)
+                LoginScreen()
             }
 
         }
