@@ -16,13 +16,13 @@ object SessionModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(sessionManager: SessionManager): UserSessionRepository {
-        return UserSessionRepository(sessionManager)
+    fun provideSessionManager(@ApplicationContext context: Context): SessionManager {
+        return SessionManager.getInstance(context)
     }
 
     @Provides
     @Singleton
-    fun provideSessionManager(@ApplicationContext context: Context): SessionManager {
-        return SessionManager.getInstance(context)
+    fun provideUserRepository(sessionManager: SessionManager): UserSessionRepository {
+        return UserSessionRepository(sessionManager)
     }
 }
