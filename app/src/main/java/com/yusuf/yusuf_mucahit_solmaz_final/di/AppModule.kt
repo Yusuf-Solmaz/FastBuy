@@ -13,6 +13,7 @@ import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getProductsCateg
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getUserCart.GetUserCartUseCase
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getUserProfile.GetUserProfileUseCase
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.login.LoginUseCase
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.searchProduct.SearchProductUseCase
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.updateUserProfile.UpdateUserProfileUseCase
 import dagger.Module
 import dagger.Provides
@@ -76,6 +77,11 @@ object AppModule {
     @Provides
     fun getCurrentUser(apiService: ApiService): GetCurrentUserUseCase {
         return GetCurrentUserUseCase(apiService)
+    }
+
+    @Provides
+    fun searchProducts(apiService: ApiService): SearchProductUseCase {
+        return SearchProductUseCase(apiService)
     }
 
 }

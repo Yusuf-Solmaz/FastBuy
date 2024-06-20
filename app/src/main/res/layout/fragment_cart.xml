@@ -10,7 +10,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_cart"
         android:layout_width="411dp"
-        android:layout_height="651dp"
+        android:layout_height="631dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
@@ -58,13 +58,13 @@
         android:id="@+id/totalPrice"
         android:layout_width="218dp"
         android:layout_height="31dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="36dp"
         android:text="Total Price:"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/payButton"
         app:layout_constraintEnd_toStartOf="@+id/payButton"
         app:layout_constraintTop_toTopOf="@+id/payButton"
-        app:layout_constraintVertical_bias="0.476" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:visibility="gone"
@@ -78,4 +78,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/discountedPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text=""
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/totalPrice"
+        app:layout_constraintEnd_toEndOf="@+id/totalPrice"
+        app:layout_constraintHorizontal_bias="0.449"
+        app:layout_constraintStart_toStartOf="@+id/totalPrice" />
 </androidx.constraintlayout.widget.ConstraintLayout>

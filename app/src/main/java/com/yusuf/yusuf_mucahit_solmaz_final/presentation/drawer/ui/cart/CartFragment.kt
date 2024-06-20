@@ -2,6 +2,7 @@ package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.cart
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -75,7 +76,10 @@ class CartFragment : Fragment() {
                             if (carts.isNotEmpty()) {
                                 binding.errorEmptyText.visibility = View.GONE
                                 cartAdapter.updateProducts(carts[0].products)
-                                binding.totalPrice.text = "Total: ${carts[0].total}$"
+                                binding.totalPrice.text = "Total: ${carts[0].discountedTotal}$"
+
+                                binding.discountedPrice.paintFlags = binding.discountedPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                                binding.discountedPrice.text = "${carts[0].total}$"
                             } else {
                                binding.errorEmptyText.visibility = View.VISIBLE
                                 Log.e("CartFragment", "Carts list is  empty.")
