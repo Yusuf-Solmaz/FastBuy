@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetUserProfileUseCase @Inject constructor(
     private val apiService: ApiService
 ) {
-    fun getUserProfile(userId: Int = 6) = rootFlow {
+    fun getUserProfile(userId:Int) = rootFlow {
         apiService.getUserProfile(userId)
     }
 }
