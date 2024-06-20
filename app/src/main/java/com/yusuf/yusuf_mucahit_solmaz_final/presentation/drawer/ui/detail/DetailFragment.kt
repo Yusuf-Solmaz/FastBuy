@@ -17,6 +17,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.yusuf.yusuf_mucahit_solmaz_final.R
+import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.SessionManager
+import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.repo.UserSessionRepository
 import com.yusuf.yusuf_mucahit_solmaz_final.data.local.model.FavoriteProducts
 import com.yusuf.yusuf_mucahit_solmaz_final.data.mapper.toAddCartRequest
 import com.yusuf.yusuf_mucahit_solmaz_final.data.mapper.toFavoriteProduct
@@ -27,9 +29,13 @@ import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.detail.adapte
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home.HomeFragmentArgs
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class DetailFragment : Fragment() {
+class DetailFragment() : Fragment() {
+
+    @Inject
+    lateinit var session: UserSessionRepository
 
     private lateinit var binding: FragmentDetailBinding
     private val viewModel: DetailViewModel by viewModels()
@@ -61,10 +67,10 @@ class DetailFragment : Fragment() {
 
         val id = args.id
 
-        // Get product details
+
         viewModel.getProductById(id)
 
-        // Observe product details
+
         viewModel.productDetail.observe(viewLifecycleOwner) { state ->
             when {
                 state.isLoading -> {
@@ -163,13 +169,13 @@ class DetailFragment : Fragment() {
         btnAddToCart.setOnClickListener {
             val quantity = etQuantity.text.toString().toIntOrNull()
 
-            if (quantity != null) {
+            if (quantity != null ) {
                 if (quantity.toInt() > product.stock){
                     Toast.makeText(requireContext(), "Quantity must be less than or equal to stock", Toast.LENGTH_SHORT).show()
 
                 }
                 else if (quantity > 0) {
-                    val cartProduct = product.toAddCartRequest(quantity.toString())
+                    val cartProduct = product.toAddCartRequest(session.getUserId(), quantity.toString())
                     Log.d("cartProduct", "showAddToCartDialog: $cartProduct")
                     viewModel.addToCart(cartProduct)
                     dialog.dismiss()
