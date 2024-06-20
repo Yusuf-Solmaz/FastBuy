@@ -1,6 +1,8 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.data.mapper
 
+import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.model.CurrentUser
 import com.yusuf.yusuf_mucahit_solmaz_final.data.local.model.FavoriteProducts
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.auth.LoginResponse
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.cart.AddCartRequest
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.cart.CartProduct
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.product.Product
@@ -32,13 +34,25 @@ fun Product.toFavoriteProduct(): FavoriteProducts {
     )
 }
 
-fun Product.toAddCartRequest(quantity: String): AddCartRequest {
+fun Product.toAddCartRequest(userId:Int,quantity: String): AddCartRequest {
     return AddCartRequest(
+        userId= userId,
         products = listOf(
           CartProduct(
                 id = this.id,
                 quantity = quantity
             )
     )
+    )
+}
+
+fun LoginResponse.toCurrentUser(): CurrentUser{
+    return CurrentUser(
+        id = this.id,
+        username = this.username,
+        token = this.token,
+        email = this.email,
+        image = this.image,
+        refreshToken = this.refreshToken
     )
 }
