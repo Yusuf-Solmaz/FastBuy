@@ -1,11 +1,19 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.presentation.authPage.viewModel
 
+import android.content.Context
+import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.SessionManager
+import dagger.hilt.android.qualifiers.ApplicationContext
+
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yusuf.yusuf_mucahit_solmaz_final.core.AppResult.GeneralResult
-import com.yusuf.yusuf_mucahit_solmaz_final.data.auth.service.AuthService
-import com.yusuf.yusuf_mucahit_solmaz_final.presentation.authPage.state.AuthUiState
-import com.yusuf.yusuf_mucahit_solmaz_final.presentation.authPage.state.LoggingState
+import com.yusuf.yusuf_mucahit_solmaz_final.data.mapper.toCurrentUser
+
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.auth.LoginRequest
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.login.LoginUseCase
+import com.yusuf.yusuf_mucahit_solmaz_final.presentation.authPage.state.AuthState
+import com.yusuf.yusuf_mucahit_solmaz_final.presentation.authPage.state.SessionState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,116 +22,59 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val authRepository: AuthService,
+    private val loginUseCase: LoginUseCase,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(AuthUiState())
-    val uiState: StateFlow<AuthUiState> = _uiState
+    private val sessionManager = SessionManager.getInstance(context)
 
-    private val _loggingState = MutableStateFlow(LoggingState())
-    val loggingState: StateFlow<LoggingState> = _loggingState
+    private val _authState = MutableStateFlow(AuthState())
+    val authState: StateFlow<AuthState> = _authState
 
-    fun signIn(email: String, password: String) {
+    private val _sessionState = MutableStateFlow(SessionState())
+    val sessionState: StateFlow<SessionState> = _sessionState
+
+    init {
+        checkSession()
+    }
+
+    fun login(username: String, password: String) {
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true)
-            authRepository.signInWithEmailAndPassword(email, password).collect { result ->
+            _authState.value = _authState.value.copy(isLoading = true)
+            loginUseCase.login(LoginRequest(username, password)).collect { result ->
                 when (result) {
                     is GeneralResult.Success -> {
+                        Log.d("login", "login: ${result.data}")
                         result.data?.let { user ->
-                            _uiState.value = _uiState.value.copy(user = user, isLoading = false)
+                            _authState.value = _authState.value.copy(user = user, isLoading = false)
+
+                            sessionManager.login(user.toCurrentUser(), user.token)
+                            _sessionState.value = _sessionState.value.copy(user = sessionManager.user, isLoading = false)
                         }
                     }
-
                     is GeneralResult.Error -> {
-                        _uiState.value =
-                            _uiState.value.copy(error = result.message, isLoading = false)
+                        Log.d("login", "login: ${result.message}")
+                        _authState.value = _authState.value.copy(error = result.message, isLoading = false)
                     }
-
                     GeneralResult.Loading -> {
-                        _uiState.value = _uiState.value.copy(isLoading = true)
+                        Log.d("login", "login: Loading")
+                        _authState.value = _authState.value.copy(isLoading = true)
                     }
                 }
             }
         }
     }
 
-    fun signUp(email: String, password: String) {
-        viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true)
-            authRepository.signUpWithEmailAndPassword(email, password)
-                .collect { result ->
-                    when (result) {
-                        is GeneralResult.Success -> {
-                            result.data?.let { user ->
-                                _uiState.value = _uiState.value.copy(
-                                    user = user,
-                                    isLoading = false
-                                )
-                            }
-                        }
-
-                        is GeneralResult.Error -> {
-                            _uiState.value =
-                                _uiState.value.copy(error = result.message, isLoading = false)
-                        }
-
-                        GeneralResult.Loading -> {
-                            _uiState.value = _uiState.value.copy(isLoading = true)
-                        }
-                    }
-                }
+    private fun checkSession() {
+        if (sessionManager.isLoggedIn()) {
+            _sessionState.value = _sessionState.value.copy(user = sessionManager.user, isLoading = false)
         }
     }
 
-    fun signOut() {
+    fun logout() {
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true)
-            authRepository.signOut().collect { result ->
-                when (result) {
-                    is GeneralResult.Success -> {
-                        _uiState.value = _uiState.value.copy(
-                            user = null,
-                            isLoading = false
-                        )
-                    }
-
-                    is GeneralResult.Error -> {
-                        _uiState.value =
-                            _uiState.value.copy(error = result.message, isLoading = false)
-                    }
-
-                    GeneralResult.Loading -> {
-                        _uiState.value = _uiState.value.copy(isLoading = true)
-                    }
-                }
-            }
-        }
-    }
-
-
-
-    fun isLoggedIn() {
-        viewModelScope.launch {
-            authRepository.isLoggedIn().collect { isLoggedIn ->
-                _loggingState.value = _loggingState.value.copy(isLoading = true)
-                when (isLoggedIn) {
-                    is GeneralResult.Success -> {
-                        _loggingState.value = _loggingState.value.copy(
-                            isLoading = false,
-                            transaction = isLoggedIn.data ?: false
-                        )
-                    }
-                    is GeneralResult.Error -> {
-                        _loggingState.value = _loggingState.value.copy(
-                            isLoading = false,
-                            error = isLoggedIn.message
-                        )
-                    }
-                    GeneralResult.Loading -> {
-                        _loggingState.value = _loggingState.value.copy(isLoading = true)
-                    }
-                }
-            }
+            sessionManager.logout()
+            _authState.value = _authState.value.copy(user = null, isLoading = false)
         }
     }
 }
