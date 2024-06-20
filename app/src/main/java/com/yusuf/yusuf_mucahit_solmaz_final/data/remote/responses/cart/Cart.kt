@@ -1,7 +1,7 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.cart
 
 data class AddCartRequest(
-    val userId: Int = 1,
+    val userId: Int,
     val products: List<CartProduct>
 )
 
