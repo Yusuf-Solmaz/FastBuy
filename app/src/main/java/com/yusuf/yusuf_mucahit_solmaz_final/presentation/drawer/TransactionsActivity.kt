@@ -1,7 +1,10 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import androidx.activity.enableEdgeToEdge
 import com.google.android.material.snackbar.Snackbar
@@ -15,10 +18,12 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.yusuf.yusuf_mucahit_solmaz_final.R
+import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.AppUtils.getAppLocale
 import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.repo.UserSessionRepository
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.ActivityTransactionsBinding
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.NavHeaderMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -78,6 +83,12 @@ class TransactionsActivity: AppCompatActivity() {
             .load(session.getUser()?.image)
             .into(navHeaderMainBinding.imageView)
             .clearOnDetach()
+    }
+
+
+    override fun attachBaseContext(newBase: Context) {
+        val config = getAppLocale(newBase)
+        super.attachBaseContext(newBase.createConfigurationContext(config))
     }
 
 
