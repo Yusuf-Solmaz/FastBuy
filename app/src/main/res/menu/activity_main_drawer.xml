@@ -9,6 +9,12 @@
             android:icon="@drawable/ic__home"
             android:title="@string/menu_home" />
 
+
+        <item
+            android:id="@+id/nav_search"
+            android:icon="@drawable/ic_search"
+            android:title="@string/menu_search" />
+
         <item
             android:id="@+id/nav_category"
             android:icon="@drawable/ic_category"
@@ -28,5 +34,10 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_profile"
             android:title="@string/menu_profile" />
+
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/menu_settings" />
     </group>
 </menu>

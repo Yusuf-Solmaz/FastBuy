@@ -75,4 +75,9 @@
             android:id="@+id/action_searchFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.settings.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>
