@@ -2,6 +2,7 @@ package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.cart
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yusuf.yusuf_mucahit_solmaz_final.R
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.updateUI
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.FragmentCartBinding
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.cart.adapter.CartAdapter
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home.adapter.ProductAdapter
@@ -43,6 +46,11 @@ class CartFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        loadBackgroundColor(requireContext()){
+                color->
+            view.setBackgroundColor(Color.parseColor(color))
+        }
 
         viewModel.getUserCart()
 

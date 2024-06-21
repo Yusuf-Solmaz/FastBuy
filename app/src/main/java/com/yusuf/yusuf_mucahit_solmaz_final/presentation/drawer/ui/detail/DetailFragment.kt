@@ -2,6 +2,7 @@ package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.detail
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
@@ -23,6 +24,8 @@ import com.yusuf.yusuf_mucahit_solmaz_final.data.local.model.FavoriteProducts
 import com.yusuf.yusuf_mucahit_solmaz_final.data.mapper.toAddCartRequest
 import com.yusuf.yusuf_mucahit_solmaz_final.data.mapper.toFavoriteProduct
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.product.Product
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.updateUI
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.FragmentDetailBinding
 import com.yusuf.yusuf_mucahit_solmaz_final.di.AppModule.addToCart
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.detail.adapter.CommentsAdapter
@@ -57,6 +60,11 @@ class DetailFragment() : Fragment() {
     @SuppressLint("SetTextI18n", "UseCompatLoadingForColorStateLists")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        loadBackgroundColor(requireContext()){
+                color->
+            view.setBackgroundColor(Color.parseColor(color))
+        }
 
         commentAdapter = CommentsAdapter(arrayListOf())
         binding.rvComments.apply {

@@ -1,5 +1,6 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.favorites
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yusuf.yusuf_mucahit_solmaz_final.data.local.model.FavoriteProducts
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.updateUI
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.FragmentFavoritesBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,6 +31,11 @@ class FavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        loadBackgroundColor(requireContext()){
+                color->
+            view.setBackgroundColor(Color.parseColor(color))
+        }
 
         adapter = FavoritesAdapter(arrayListOf())
         binding.recyclerView.layoutManager = LinearLayoutManager(context)

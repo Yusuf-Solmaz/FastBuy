@@ -1,6 +1,7 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.search
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,6 +13,8 @@ import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.updateUI
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.FragmentSearchBinding
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.search.adapter.SearchProductAdapter
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.search.viewmodel.SearchViewModel
@@ -38,6 +41,11 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        loadBackgroundColor(requireContext()){
+                color->
+            view.setBackgroundColor(Color.parseColor(color))
+        }
 
         viewModel.searchProducts("")
 

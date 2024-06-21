@@ -1,5 +1,6 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.SessionManager
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.updateUI
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.FragmentHomeBinding
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home.adapter.ProductAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,11 +35,19 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        loadBackgroundColor(requireContext()){
+                color->
+            view.setBackgroundColor(Color.parseColor(color))
+        }
 
         sessionManager = SessionManager.getInstance(requireContext())
 

@@ -1,5 +1,6 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.category
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.yusuf.yusuf_mucahit_solmaz_final.R
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.updateUI
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.FragmentCategoryBinding
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.category.adapter.CategoryAdapter
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.category.adapter.GridSpacingItemDecoration
@@ -31,6 +34,11 @@ class CategoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        loadBackgroundColor(requireContext()){
+                color->
+            view.setBackgroundColor(Color.parseColor(color))
+        }
 
         adapter = CategoryAdapter(arrayListOf())
 
