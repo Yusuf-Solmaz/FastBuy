@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Yusuf_Mucahit_Solmaz_Final</string>
+    <string name="favorite_item_deletion_dialog_text">Silmek istediğinizden emin misiniz?</string>
+    <string name="favorite_item_deletion_dialog_positive_button">Evet</string>
+    <string name="favorite_item_deletion_dialog_negative_button">Hayır</string>
+    <string name="title_activity_main">Ana Sayfa</string>
+    <string name="navigation_drawer_open">Navigasyon çekmecesini aç</string>
+    <string name="navigation_drawer_close">Navigasyon çekmecesini kapat</string>
+    <string name="nav_header_desc">Navigasyon başlığı</string>
+    <string name="action_settings">Ayarlar</string>
+
+    <string name="menu_home">Ana Sayfa</string>
+    <string name="menu_favorites">Favoriler</string>
+    <string name="menu_category">Kategori</string>
+    <string name="menu_detail">Ürün Detayı</string>
+    <string name="menu_cart">Sepet</string>
+    <string name="menu_profile">Profil</string>
+    <string name="menu_search">Ara</string>
+    <string name="menu_settings">Ayarlar\n</string>
+</resources>

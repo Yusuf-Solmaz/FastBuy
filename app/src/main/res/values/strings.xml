@@ -22,4 +22,6 @@
     <string name="menu_cart">Cart</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_search">Search</string>
+    <string name="menu_settings">Settings\n</string>
+    <string name="change_language">Change Language</string>
 </resources>
