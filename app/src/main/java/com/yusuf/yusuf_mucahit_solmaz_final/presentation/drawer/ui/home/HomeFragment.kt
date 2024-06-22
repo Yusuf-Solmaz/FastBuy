@@ -12,12 +12,16 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.SessionManager
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.product.Product
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.updateUI
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.FragmentHomeBinding
+import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home.adapter.CarouselAdapter
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home.adapter.ProductAdapter
+import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home.adapter.SaleAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.random.Random
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -28,7 +32,9 @@ class HomeFragment : Fragment() {
     private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var productAdapter: ProductAdapter
     private val args: HomeFragmentArgs by navArgs()
-   private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager: SessionManager
+    private lateinit var carouselAdapter: CarouselAdapter
+    private lateinit var saleAdapter: SaleAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,6 +63,17 @@ class HomeFragment : Fragment() {
         binding.rvProducts.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = productAdapter
+        }
+
+        carouselAdapter = CarouselAdapter(arrayListOf())
+        binding.carouselRecyclerview.apply {
+            adapter = carouselAdapter
+        }
+
+        saleAdapter = SaleAdapter(arrayListOf())
+        binding.saleRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = saleAdapter
         }
 
         val categoryName = args.category
@@ -88,9 +105,32 @@ class HomeFragment : Fragment() {
                     binding.errorMessage.visibility = View.GONE
                     binding.rvProducts.visibility = View.VISIBLE
                     productAdapter.updateProducts(state.productResponse.products)
+
+                    binding.carouselRecyclerview.apply {
+                        set3DItem(true)
+                        setAlpha(true)
+                        setInfinite(true)
+                    }
+                    carouselAdapter.updateProducts(state.productResponse.products)
+
+
+                    val randomProducts = getRandomProducts(state.productResponse.products, 5)
+                    saleAdapter.updateSaleProducts(randomProducts)
                 }
             }
         })
+    }
+
+    private fun getRandomProducts(products: List<Product>, count: Int): List<Product> {
+        return if (products.size <= count) {
+            products
+        } else {
+            val randomIndices = mutableSetOf<Int>()
+            while (randomIndices.size < count) {
+                randomIndices.add(Random.nextInt(products.size))
+            }
+            randomIndices.map { products[it] }
+        }
     }
 
 

@@ -7,7 +7,7 @@
     android:layout_marginBottom="10dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
-    android:background="@color/mainColor"
+    android:background="@drawable/border"
     android:id="@+id/linearLayout"
     >
 
@@ -15,13 +15,15 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/mainColor"
+
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/item_product_bg">
+            android:background="@drawable/border"
+
+            >
 
             <ImageView
                 android:id="@+id/imageView2"
