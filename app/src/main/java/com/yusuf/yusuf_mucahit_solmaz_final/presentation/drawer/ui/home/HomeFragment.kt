@@ -11,6 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.gone
+import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.visible
 import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.SessionManager
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.product.Product
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager
@@ -57,7 +59,7 @@ class HomeFragment : Fragment() {
 
         sessionManager = SessionManager.getInstance(requireContext())
 
-        Log.d("currentUser", "onViewCreated: ${sessionManager.user}")
+
 
         productAdapter = ProductAdapter(arrayListOf(), requireContext())
         binding.rvProducts.apply {
@@ -87,23 +89,27 @@ class HomeFragment : Fragment() {
                 homeViewModel.getProductsByCategory(it) }
         }
 
+
         homeViewModel.products.observe(viewLifecycleOwner, Observer { state ->
             when {
                 state.isLoading -> {
-                    binding.loadingAnimation.visibility = View.VISIBLE
-                    binding.errorMessage.visibility = View.GONE
-                    binding.rvProducts.visibility = View.GONE
+                    binding.loadingLayout.visible()
+                    binding.homeLayout.gone()
+                    binding.errorLayout.gone()
                 }
                 state.error != null -> {
-                    binding.loadingAnimation.visibility = View.GONE
-                    binding.errorMessage.visibility = View.VISIBLE
-                    binding.errorMessage.text = state.error
-                    binding.rvProducts.visibility = View.GONE
+                    binding.error.text = state.error
+
+                    binding.loadingLayout.gone()
+                    binding.homeLayout.gone()
+                    binding.errorLayout.visible()
                 }
                 state.productResponse != null -> {
-                    binding.loadingAnimation.visibility = View.GONE
-                    binding.errorMessage.visibility = View.GONE
-                    binding.rvProducts.visibility = View.VISIBLE
+
+                    binding.loadingLayout.gone()
+                    binding.homeLayout.visible()
+                    binding.errorLayout.gone()
+
                     productAdapter.updateProducts(state.productResponse.products)
 
                     binding.carouselRecyclerview.apply {
@@ -114,7 +120,7 @@ class HomeFragment : Fragment() {
                     carouselAdapter.updateProducts(state.productResponse.products)
 
 
-                    val randomProducts = getRandomProducts(state.productResponse.products, 5)
+                     val randomProducts = getRandomProducts(state.productResponse.products, 5)
                     saleAdapter.updateSaleProducts(randomProducts)
                 }
             }
