@@ -11,19 +11,19 @@ data class Page(
 
 val pager = listOf(
     Page(
-        "Discover Culinary Wonders",
-        "Embark on a delicious journey with Sweet Whispers, your ultimate guide to exploring a world of flavors. Discover recipes, cooking tips, and culinary secrets from every corner of the globe.",
-        R.raw.loading_food_image_lottie
+        "Explore and Shop",
+        "Step into FastBuy to explore and shop, your trusted guide where you can find every kind of product. Discover fashion, technology, home essentials, and more, and don't miss out on exclusive deals.",
+        R.raw.onboarding_1
     ),
     Page(
-        "Savor Every Moment",
-        "Transform everyday meals into extraordinary experiences with Sweet Whispers. From quick bites to gourmet dishes, find inspiration and tips to make every meal memorable.",
-        R.raw.onboarding2
+        "Personalize Your Shopping Experience",
+        "Personalize every shopping experience with FastBuy. Find products tailored to your needs, get recommendations, and keep track of your favorite items.",
+        R.raw.onboarding_2
     ),
     Page(
-        "Your Kitchen Companion",
-        "Welcome to Sweet Whispers, your trusty companion in the kitchen. Whether you're a seasoned chef or a culinary novice, we've got you covered with recipes, tutorials, and a community of food lovers.",
-        R.raw.onboarding3
+        "Simplify Your Shopping",
+        "Welcome to FastBuy, the app that simplifies your shopping experience. Browse thousands of options in fashion, electronics, home decor, and more, track discounts and promotions.",
+        R.raw.onboarding_3
     )
 
 )

@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.yusuf.yusuf_mucahit_solmaz_final.R
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.components.LoadingLottie
-import com.yusuf.yusuf_mucahit_solmaz_final.ui.theme.Orange
+import com.yusuf.yusuf_mucahit_solmaz_final.ui.theme.Blue
 
 @Composable
 fun OnboardingPage(page: Page){
@@ -31,7 +31,7 @@ fun OnboardingPage(page: Page){
             style = TextStyle(
                 fontFamily = FontFamily(Font(R.font.onboarding_title1)),
                 fontSize = 35.sp,
-                color = Orange
+                color = Blue
             ),
             modifier = Modifier
                 .padding(horizontal = 8.dp, vertical = 2.dp)

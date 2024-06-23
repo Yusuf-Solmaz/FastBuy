@@ -18,10 +18,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import com.yusuf.yusuf_mucahit_solmaz_final.R
 
 
 @Composable
@@ -54,9 +56,9 @@ fun PasswordFieldComponent(stateValue:String,label: String,onValueChange: (Strin
         },
         trailingIcon = {
             val iconImage = if (passwordVisibility.value){
-                Icons.Filled.Check
+                R.drawable.not_show_password
             } else {
-                Icons.Filled.CheckCircle
+                R.drawable.show_password
             }
 
             var description = if(passwordVisibility.value){
@@ -65,8 +67,9 @@ fun PasswordFieldComponent(stateValue:String,label: String,onValueChange: (Strin
                 "Show Password"
             }
 
+            val iconPainter = painterResource(id = iconImage)
             IconButton(onClick = { passwordVisibility.value = !passwordVisibility.value }) {
-                Icon(imageVector = iconImage, contentDescription = description)
+                Icon(painter = iconPainter, contentDescription = description)
             }
         },
         visualTransformation = if (passwordVisibility.value) VisualTransformation.None else PasswordVisualTransformation()

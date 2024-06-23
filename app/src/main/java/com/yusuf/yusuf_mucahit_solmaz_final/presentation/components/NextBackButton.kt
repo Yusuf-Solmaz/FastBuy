@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import com.yusuf.yusuf_mucahit_solmaz_final.ui.theme.Orange
+import com.yusuf.yusuf_mucahit_solmaz_final.ui.theme.Blue
 
 @Composable
 fun NextBackButton(
@@ -31,7 +31,7 @@ fun NextBackButton(
                 onBackClick()
             }) {
                 Text(text = "Back", style = TextStyle(
-                    color = Orange
+                    color = Blue
                 )
                 )
             }
@@ -45,7 +45,7 @@ fun NextBackButton(
             }
         },
             colors = ButtonDefaults.buttonColors(
-                containerColor = Orange,
+                containerColor = Blue,
                 contentColor = Color.White
             ),
             shape = RoundedCornerShape(4.dp)

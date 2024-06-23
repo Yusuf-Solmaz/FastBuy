@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.yusuf.yusuf_mucahit_solmaz_final.ui.theme.Orange
+import com.yusuf.yusuf_mucahit_solmaz_final.ui.theme.Blue
 
 @Composable
 fun PageIndicator(
@@ -29,7 +29,7 @@ fun PageIndicator(
                     .size(20.dp)
                     .clip(CircleShape)
                     .background(
-                        color = if(page == selectedPage) Orange else Color.Gray
+                        color = if(page == selectedPage) Blue else Color.Gray
                     )
             ) {
 
