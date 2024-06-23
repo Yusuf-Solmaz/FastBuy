@@ -2,11 +2,13 @@ package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -17,12 +19,16 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.yusuf.yusuf_mucahit_solmaz_final.MainActivity
 import com.yusuf.yusuf_mucahit_solmaz_final.R
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.AppUtils.getAppLocale
 import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.repo.UserSessionRepository
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.ActivityTransactionsBinding
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.NavHeaderMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.Locale
 import javax.inject.Inject
 
@@ -40,11 +46,10 @@ class TransactionsActivity: AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
 
         binding = ActivityTransactionsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        enableEdgeToEdge()
 
         setSupportActionBar(binding.appBarMain.toolbar)
 
@@ -83,8 +88,31 @@ class TransactionsActivity: AppCompatActivity() {
             .load(session.getUser()?.image)
             .into(navHeaderMainBinding.imageView)
             .clearOnDetach()
+
+
+        binding.navView.menu.findItem(R.id.logout).setOnMenuItemClickListener {
+            showLogoutDialog()
+            true
+        }
     }
 
+    private fun showLogoutDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Logout")
+            .setMessage("Are you sure you want to logout?")
+            .setPositiveButton("Yes") { _, _ ->
+                CoroutineScope(Dispatchers.IO).launch {
+
+                    session.logout()
+                    
+                    val intent = Intent(this@TransactionsActivity,MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+            .setNegativeButton("No", null)
+            .show()
+    }
 
     override fun attachBaseContext(newBase: Context) {
         val config = getAppLocale(newBase)
