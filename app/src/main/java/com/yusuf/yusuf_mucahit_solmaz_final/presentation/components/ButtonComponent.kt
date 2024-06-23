@@ -17,6 +17,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.yusuf.yusuf_mucahit_solmaz_final.ui.theme.Blue
+import com.yusuf.yusuf_mucahit_solmaz_final.ui.theme.DarkBlue
 
 @Composable
 fun ButtonComponent(value: String, onClick: () -> Unit) {
@@ -33,11 +35,10 @@ fun ButtonComponent(value: String, onClick: () -> Unit) {
                 .fillMaxWidth()
                 .heightIn(48.dp)
                 .background(
-                    brush = Brush.horizontalGradient(
+                    brush = Brush.verticalGradient(
                         listOf(
-                            Color(0xFFd70f4b),
-                            Color(0xFFf50110),
-                            //Color(0xFFf07167),
+                            Blue,
+                            DarkBlue
                         )
                     ), shape = RoundedCornerShape(50.dp)
                 ),
