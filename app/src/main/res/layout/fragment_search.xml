@@ -10,7 +10,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         id="@+id/cardView"
-        android:layout_width="409dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,10 +18,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <SearchView
-            android:focusable="true"
             android:id="@+id/searchView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:focusable="true" />
     </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
