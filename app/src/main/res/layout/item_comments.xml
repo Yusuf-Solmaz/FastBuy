@@ -5,6 +5,7 @@
     android:layout_height="wrap_content">
 
     <RatingBar
+        android:isIndicator="true"
         android:id="@+id/ratingBar"
         android:layout_width="229dp"
         android:layout_height="63dp"
