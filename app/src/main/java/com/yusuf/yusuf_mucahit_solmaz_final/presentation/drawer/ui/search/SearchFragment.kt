@@ -10,22 +10,31 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
+import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.SessionManager
+import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.repo.UserSessionRepository
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.updateUI
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.FragmentSearchBinding
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.search.adapter.SearchProductAdapter
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.search.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
 
+    @Inject
+    lateinit var session: UserSessionRepository
+
     private lateinit var binding: FragmentSearchBinding
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var searchProductAdapter: SearchProductAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,9 +56,29 @@ class SearchFragment : Fragment() {
             view.setBackgroundColor(Color.parseColor(color))
         }
 
+
+
         viewModel.searchProducts("")
 
-        searchProductAdapter = SearchProductAdapter(arrayListOf(), requireContext())
+        searchProductAdapter = SearchProductAdapter(arrayListOf(), requireContext(),session){
+            viewModel.addToCart(it)
+        }
+
+        viewModel.searchAddToCart.observe(viewLifecycleOwner) { state ->
+            when {
+                state.isLoading -> {
+
+                }
+                state.error != null -> {
+
+                }
+                state.success != null -> {
+                    Toast.makeText(requireContext(), "Added to cart", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        }
+
         binding.rvSearchProduct.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = searchProductAdapter
