@@ -76,8 +76,8 @@ fun LoginScreen(
                 TextFieldComponent(
                     email,
                     onValueChange = { updatedEmail -> email = updatedEmail.trim() },
-                    label = "Email",
-                    painterResource = painterResource(id = R.drawable.mail_icon)
+                    label = "Nickname",
+                    painterResource = painterResource(id = R.drawable.ic_profile)
                 )
                 PasswordFieldComponent(
                     password,
@@ -90,9 +90,8 @@ fun LoginScreen(
                 ButtonComponent(value = "Login", onClick = {
                     viewModel.login(email, password)
                 })
-                Spacer(modifier = Modifier.height(10.dp))
-                DividerTextComponent()
-                Spacer(modifier = Modifier.height(15.dp))
+
+
 
             }
         }
