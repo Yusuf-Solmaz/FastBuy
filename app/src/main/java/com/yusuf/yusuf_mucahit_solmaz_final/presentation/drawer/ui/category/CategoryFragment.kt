@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.yusuf.yusuf_mucahit_solmaz_final.R
+import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setVisibility
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.updateUI
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.FragmentCategoryBinding
@@ -49,9 +50,23 @@ class CategoryFragment : Fragment() {
         binding.rvCategories.adapter = adapter
 
         viewModel.categories.observe(viewLifecycleOwner, Observer { state ->
-            state.productResponse?.let {
-                adapter.updateCategories(it)
+
+
+             setVisibility(
+                 isLoading = state.isLoading,
+                 isError = state.error != null,
+                 isSuccess = state.productResponse != null,
+                 loadingView = binding.profileLoadingErrorComponent.loadingLayout,
+                 errorView = binding.profileLoadingErrorComponent.errorLayout,
+                 successView = binding.categoryLayout
+             )
+
+            if (state.productResponse != null){
+                state.productResponse.let {
+                    adapter.updateCategories(it)
+                }
             }
+
         })
     }
 }
