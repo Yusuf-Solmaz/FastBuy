@@ -30,7 +30,9 @@ fun Product.toFavoriteProduct(): FavoriteProducts {
         productImage = this.images[0],
         rating = this.rating,
         title = this.title,
-        description = this.description
+        description = this.description,
+        price = this.price,
+        shippingInformation = this.shippingInformation
     )
 }
 
