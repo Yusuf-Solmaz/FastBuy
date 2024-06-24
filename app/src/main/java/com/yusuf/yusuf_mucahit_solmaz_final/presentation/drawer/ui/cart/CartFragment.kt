@@ -15,12 +15,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.yusuf.yusuf_mucahit_solmaz_final.R
+import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setVisibility
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.updateUI
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.FragmentCartBinding
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.cart.adapter.CartAdapter
-import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home.adapter.ProductAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,6 +27,7 @@ class CartFragment : Fragment() {
     private lateinit var binding: FragmentCartBinding
     private val viewModel: CartViewModel by viewModels()
     private lateinit var cartAdapter: CartAdapter
+    private var totalPrice = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,49 +60,42 @@ class CartFragment : Fragment() {
         }
 
         viewModel.cart.observe(viewLifecycleOwner, Observer { state ->
-            try {
-                when {
-                    state.isLoading -> {
-                        binding.loadingAnimation.visibility = View.VISIBLE
-                        binding.errorMessage.visibility = View.GONE
-                        binding.rvCart.visibility = View.GONE
 
-                    }
-                    state.error != null -> {
-                        binding.loadingAnimation.visibility = View.GONE
-                        binding.errorMessage.visibility = View.VISIBLE
-                        binding.errorMessage.text = state.error
-                        binding.rvCart.visibility = View.GONE
-                    }
-                    state.cartResponse != null -> {
-                        binding.loadingAnimation.visibility = View.GONE
-                        binding.errorMessage.visibility = View.GONE
-                        binding.rvCart.visibility = View.VISIBLE
-                        try {
-                            val carts = state.cartResponse.carts
-                            if (carts.isNotEmpty()) {
-                                binding.errorEmptyText.visibility = View.GONE
-                                cartAdapter.updateProducts(carts[0].products)
-                                binding.totalPrice.text = "Total: ${carts[0].discountedTotal}$"
+            setVisibility(
+                isLoading = state.isLoading,
+                isError = state.error != null,
+                isSuccess = state.cartResponse != null,
+                loadingView = binding.profileLoadingErrorComponent.loadingLayout,
+                errorView = binding.profileLoadingErrorComponent.errorLayout,
+                successView = binding.cartLayout
+            )
 
-                                binding.discountedPrice.paintFlags = binding.discountedPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                                binding.discountedPrice.text = "${carts[0].total}$"
-                            } else {
-                               binding.errorEmptyText.visibility = View.VISIBLE
-                                Log.e("CartFragment", "Carts list is  empty.")
-                            }
-                        } catch (e: Exception) {
-                            Log.e("CartFragment", "Error updating cart adapter: ${e.message}")
-                        }
+            if (state.cartResponse != null){
+                totalPrice = state.cartResponse.total
+                Log.e("CartFragment", "totalPrice: $totalPrice")
+                try {
+                    val carts = state.cartResponse.carts
+                    if (carts.isNotEmpty()) {
+                        binding.errorEmptyText.visibility = View.GONE
+                        cartAdapter.updateProducts(carts[0].products)
+                        binding.totalPrice.text = "Total: ${carts[0].discountedTotal}$"
 
-                        binding.payButton.setOnClickListener {
-                            showConfirmationDialog()
-                        }
+                        binding.discountedPrice.paintFlags = binding.discountedPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                        binding.discountedPrice.text = "${carts[0].total}$"
+                    } else {
+                        binding.errorEmptyText.visibility = View.VISIBLE
+                        Log.e("CartFragment", "Carts list is  empty.")
                     }
+                } catch (e: Exception) {
+                    Log.e("CartFragment", "Error updating cart adapter: ${e.message}")
                 }
-            } catch (e: Exception) {
-                Log.e("CartFragment", "Error observing cart state: ${e.message}")
+
+
+                binding.payButton.setOnClickListener(::showConfirmationDialog)
+
+
             }
+
         })
 
     }
@@ -113,18 +105,24 @@ class CartFragment : Fragment() {
         viewModel.getUserCart()
     }
 
-    private fun showConfirmationDialog() {
-        AlertDialog.Builder(requireContext())
-            .setMessage("Do you want to proceed with the transaction?")
-            .setPositiveButton("Yes") { dialog, which ->
-                Toast.makeText(requireContext(), "Transaction successful", Toast.LENGTH_SHORT).show()
-                val action = CartFragmentDirections.actionNavCartToNavHome()
-                findNavController().navigate(action)
-            }
-            .setNegativeButton("No") { dialog, which ->
-                dialog.dismiss()
-            }
-            .create()
-            .show()
+    private fun showConfirmationDialog(view: View?) {
+        if (totalPrice >0){
+            AlertDialog.Builder(requireContext())
+                .setMessage("Do you want to proceed with the transaction?")
+                .setPositiveButton("Yes") { dialog, which ->
+                    Toast.makeText(requireContext(), "Transaction successful", Toast.LENGTH_SHORT).show()
+                    val action = CartFragmentDirections.actionNavCartToNavHome()
+                    findNavController().navigate(action)
+                }
+                .setNegativeButton("No") { dialog, which ->
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
+        }
+        else{
+            Toast.makeText(requireContext(), "The cart is empty", Toast.LENGTH_SHORT).show()
+        }
+
     }
 }
