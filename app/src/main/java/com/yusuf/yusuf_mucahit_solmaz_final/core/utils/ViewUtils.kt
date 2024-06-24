@@ -14,4 +14,31 @@ object ViewUtils {
     fun View.gone(){
         visibility = View.GONE
     }
+
+    fun setVisibility(
+        isLoading: Boolean,
+        isError: Boolean,
+        isSuccess: Boolean,
+        loadingView: View,
+        errorView: View,
+        successView: View
+    ) {
+        if (isLoading) {
+
+            loadingView.visible()
+            errorView.gone()
+            successView.gone()
+        }
+        else if (isError) {
+
+            loadingView.gone()
+            errorView.visible()
+            successView.gone()
+        }
+        else if (isSuccess) {
+            loadingView.gone()
+            errorView.gone()
+            successView.visible()
+        }
+    }
 }
