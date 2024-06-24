@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
@@ -54,6 +55,7 @@ class TransactionsActivity: AppCompatActivity() {
         setSupportActionBar(binding.appBarMain.toolbar)
 
 
+
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -63,7 +65,6 @@ class TransactionsActivity: AppCompatActivity() {
                 R.id.nav_home, R.id.nav_category,R.id.nav_favorites, R.id.nav_cart,R.id.nav_profile
             ), drawerLayout
         )
-
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)

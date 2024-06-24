@@ -9,37 +9,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/loading_layout"
-        android:visibility="gone">
+        android:id="@+id/profile_loading_error"
+        android:visibility="visible">
 
         <include
-            layout="@layout/loading_layout"
-            android:id="@+id/loading_animation_home"
+            android:id="@+id/profile_loading_error_component"
+            layout="@layout/info_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        android:id="@+id/error_layout">
-
-
-        <TextView
-            android:textColor="@color/statusRed"
-            android:textStyle="bold"
-            android:textSize="30sp"
-            android:id="@+id/error"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Error"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

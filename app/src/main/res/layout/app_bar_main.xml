@@ -7,11 +7,14 @@
     tools:context=".presentation.drawer.TransactionsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/Theme.Yusuf_Mucahit_Solmaz_Final.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
+
+            app:titleTextColor="@color/white"
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"

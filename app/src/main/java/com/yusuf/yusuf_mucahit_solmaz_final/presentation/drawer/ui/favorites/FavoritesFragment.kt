@@ -2,12 +2,16 @@ package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.favorites
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.gone
+import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setVisibility
+import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.visible
 import com.yusuf.yusuf_mucahit_solmaz_final.data.local.model.FavoriteProducts
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.updateUI
@@ -41,9 +45,26 @@ class FavoritesFragment : Fragment() {
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         binding.recyclerView.adapter = adapter
 
-        viewModel.favoriteProducts.observe(viewLifecycleOwner) { products ->
-            if (products != null) {
-                adapter.updateProducts(products)
+        viewModel.favoriteProducts.observe(viewLifecycleOwner) { state ->
+
+            setVisibility(
+                isLoading = state.isLoading,
+                isError = state.error != null,
+                isSuccess = state.favoriteProductsResponse != null,
+                loadingView = binding.profileLoadingErrorComponent.loadingLayout,
+                errorView = binding.profileLoadingErrorComponent.errorLayout,
+                successView = binding.favoritesLayout
+            )
+
+            if (state.favoriteProductsResponse != null) {
+                adapter.updateProducts(state.favoriteProductsResponse)
+            }
+            if (state.favoriteProductsResponse.isNullOrEmpty()){
+                Log.d("stateelse", "onViewCreated: $state.favoriteProductsResponse")
+                binding.emptyListText.visible()
+            }
+            else{
+                binding.emptyListText.gone()
             }
         }
     }

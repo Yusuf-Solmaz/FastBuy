@@ -15,6 +15,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setVisibility
 import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.SessionManager
 import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.repo.UserSessionRepository
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
@@ -51,8 +52,7 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        loadBackgroundColor(requireContext()){
-                color->
+        loadBackgroundColor(requireContext()) { color ->
             view.setBackgroundColor(Color.parseColor(color))
         }
 
@@ -60,23 +60,24 @@ class SearchFragment : Fragment() {
 
         viewModel.searchProducts("")
 
-        searchProductAdapter = SearchProductAdapter(arrayListOf(), requireContext(),session){
+        searchProductAdapter = SearchProductAdapter(arrayListOf(), requireContext(), session) {
             viewModel.addToCart(it)
         }
 
         viewModel.searchAddToCart.observe(viewLifecycleOwner) { state ->
-            when {
-                state.isLoading -> {
 
-                }
-                state.error != null -> {
+            setVisibility(
+                isLoading = state.isLoading,
+                isError = state.error != null,
+                isSuccess = state.success != null,
+                loadingView = binding.profileLoadingErrorComponent.loadingLayout,
+                errorView = binding.profileLoadingErrorComponent.errorLayout,
+                successView = binding.searchLayout
+            )
 
-                }
-                state.success != null -> {
-                    Toast.makeText(requireContext(), "Added to cart", Toast.LENGTH_SHORT).show()
-                }
+            if (state.success != null) {
+                Toast.makeText(requireContext(), "Added to cart", Toast.LENGTH_SHORT).show()
             }
-
         }
 
         binding.rvSearchProduct.apply {
@@ -103,19 +104,20 @@ class SearchFragment : Fragment() {
         })
 
         viewModel.searchProduct.observe(viewLifecycleOwner) { state ->
-            when {
-                state.isLoading -> {
-                    // Handle loading state if needed
-                }
 
-                state.error != null -> {
-                    // Handle error state if needed
-                }
+            setVisibility(
+                isLoading = state.isLoading,
+                isError = state.error != null,
+                isSuccess = state.productResponse != null,
+                loadingView = binding.profileLoadingErrorComponent.loadingLayout,
+                errorView = binding.profileLoadingErrorComponent.errorLayout,
+                successView = binding.searchLayout
+            )
 
-                state.productResponse != null -> {
+                if(state.productResponse != null){
                     searchProductAdapter.updateSearchProduct(state.productResponse.products)
                 }
             }
         }
     }
-}
+

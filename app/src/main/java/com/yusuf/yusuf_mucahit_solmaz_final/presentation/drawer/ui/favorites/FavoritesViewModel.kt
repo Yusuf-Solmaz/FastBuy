@@ -16,8 +16,8 @@ class FavoritesViewModel @Inject constructor(
     private val favoriteProductsDao: FavoriteProductsDao
 ) : ViewModel() {
 
-    private val _favoriteProducts = MutableLiveData<List<FavoriteProducts>>()
-    val favoriteProducts: LiveData<List<FavoriteProducts>> = _favoriteProducts
+    private val _favoriteProducts = MutableLiveData<FavoriteState>()
+    val favoriteProducts: LiveData<FavoriteState> = _favoriteProducts
 
     init {
         getFavoriteProducts()
@@ -25,8 +25,29 @@ class FavoritesViewModel @Inject constructor(
 
     fun getFavoriteProducts() {
         viewModelScope.launch(Dispatchers.IO) {
-            val products = favoriteProductsDao.getAll()
-            _favoriteProducts.postValue(products)
+            _favoriteProducts.postValue(FavoriteState(
+                isLoading = true,
+                error = null,
+                favoriteProductsResponse = emptyList()
+            ))
+            try {
+                val products = favoriteProductsDao.getAll()
+                    _favoriteProducts.postValue(
+                        FavoriteState(
+                            isLoading = false,
+                            error = null,
+                            favoriteProductsResponse = products
+                        )
+                    )
+
+            }
+            catch (e:Exception){
+                _favoriteProducts.postValue(FavoriteState(
+                    isLoading = false,
+                    error = e.message,
+                    favoriteProductsResponse = emptyList()
+                ))
+            }
         }
     }
 }

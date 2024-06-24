@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.gone
+import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setVisibility
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.visible
 import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.SessionManager
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.product.Product
@@ -91,25 +92,17 @@ class HomeFragment : Fragment() {
 
 
         homeViewModel.products.observe(viewLifecycleOwner, Observer { state ->
-            when {
-                state.isLoading -> {
-                    binding.loadingLayout.visible()
-                    binding.homeLayout.gone()
-                    binding.errorLayout.gone()
-                }
-                state.error != null -> {
-                    binding.error.text = state.error
 
-                    binding.loadingLayout.gone()
-                    binding.homeLayout.gone()
-                    binding.errorLayout.visible()
-                }
-                state.productResponse != null -> {
+            setVisibility(
+                isLoading = state.isLoading,
+                isError = state.error != null,
+                isSuccess = state.productResponse != null,
+                loadingView = binding.profileLoadingErrorComponent.loadingLayout,
+                errorView = binding.profileLoadingErrorComponent.errorLayout,
+                successView = binding.homeLayout
+            )
 
-                    binding.loadingLayout.gone()
-                    binding.homeLayout.visible()
-                    binding.errorLayout.gone()
-
+            if(state.productResponse != null) {
                     productAdapter.updateProducts(state.productResponse.products)
 
                     binding.carouselRecyclerview.apply {
@@ -123,7 +116,7 @@ class HomeFragment : Fragment() {
                      val randomProducts = getRandomProducts(state.productResponse.products, 5)
                     saleAdapter.updateSaleProducts(randomProducts)
                 }
-            }
+
         })
     }
 
