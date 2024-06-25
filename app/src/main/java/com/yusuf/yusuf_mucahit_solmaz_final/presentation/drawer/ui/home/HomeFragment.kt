@@ -41,9 +41,9 @@ class HomeFragment : Fragment() {
     private lateinit var carouselAdapter: CarouselAdapter
     private lateinit var saleAdapter: SaleAdapter
 
-    private val allProducts = ArrayList<Product>() // Mevcut verileri saklamak için liste
-    private val carouselProducts = ArrayList<Product>() // CarouselAdapter için mevcut verileri saklamak için liste
-    private val saleProducts = ArrayList<Product>() // SaleAdapter için mevcut verileri saklamak için liste
+    private val allProducts = ArrayList<Product>()
+    private val carouselProducts = ArrayList<Product>()
+    private val saleProducts = ArrayList<Product>()
 
     private var isLoading = false
     private var isLastPage = false
@@ -87,12 +87,12 @@ class HomeFragment : Fragment() {
             })
         }
 
-        carouselAdapter = CarouselAdapter(carouselProducts) // carouselProducts listesini CarouselAdapter'a ver
+        carouselAdapter = CarouselAdapter(carouselProducts)
         binding.carouselRecyclerview.apply {
             adapter = carouselAdapter
         }
 
-        saleAdapter = SaleAdapter(saleProducts) // saleProducts listesini SaleAdapter'a ver
+        saleAdapter = SaleAdapter(saleProducts)
         binding.saleRecyclerView.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = saleAdapter
@@ -125,13 +125,13 @@ class HomeFragment : Fragment() {
 
             if (state.productResponse != null) {
                 val newProducts = state.productResponse.products
-                allProducts.addAll(newProducts) // Yeni verileri mevcut listeye ekle
-                carouselProducts.addAll(newProducts) // Yeni verileri carouselProducts listesine ekle
-                saleProducts.addAll(newProducts) // Yeni verileri saleProducts listesine ekle
+                allProducts.addAll(newProducts)
+                carouselProducts.addAll(newProducts)
+                saleProducts.addAll(newProducts)
 
-                productAdapter.notifyDataSetChanged() // Tüm listeyi güncelle
-                carouselAdapter.notifyDataSetChanged() // CarouselAdapter'i güncelle
-                saleAdapter.notifyDataSetChanged() // SaleAdapter'i güncelle
+                productAdapter.notifyDataSetChanged()
+                carouselAdapter.notifyDataSetChanged()
+                saleAdapter.notifyDataSetChanged()
 
                 binding.carouselRecyclerview.apply {
                     set3DItem(true)
@@ -139,7 +139,7 @@ class HomeFragment : Fragment() {
                     setInfinite(true)
                 }
 
-                val randomProducts = getRandomProducts(state.productResponse.products, 5)
+                val randomProducts = getRandomProducts(state.productResponse.products)
                 saleAdapter.updateSaleProducts(randomProducts)
             }
 
@@ -157,7 +157,7 @@ class HomeFragment : Fragment() {
         })
     }
 
-    private fun getRandomProducts(products: List<Product>, count: Int): List<Product> {
+    private fun getRandomProducts(products: List<Product>, count: Int = 5): List<Product> {
         return if (products.size <= count) {
             products
         } else {
