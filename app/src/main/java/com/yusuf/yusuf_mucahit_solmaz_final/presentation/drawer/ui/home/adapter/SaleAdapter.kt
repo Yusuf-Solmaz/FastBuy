@@ -59,4 +59,9 @@ class SaleAdapter(private val saleProducts: ArrayList<Product>) : RecyclerView.A
         saleProducts.addAll(newProducts)
         notifyDataSetChanged()
     }
+
+    fun addSaleProducts(newProducts: List<Product>) {
+        saleProducts.addAll(newProducts)
+        notifyDataSetChanged()
+    }
 }

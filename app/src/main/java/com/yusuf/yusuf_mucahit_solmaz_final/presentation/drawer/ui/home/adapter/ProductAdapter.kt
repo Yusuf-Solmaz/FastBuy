@@ -16,10 +16,9 @@ import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManage
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.ItemProductBinding
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home.HomeFragmentDirections
 
-class ProductAdapter(private val products: ArrayList<Product>,private val context: Context) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
-    class ProductViewHolder(val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root) {
+class ProductAdapter(private val products: ArrayList<Product>, private val context: Context) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
-    }
+    class ProductViewHolder(val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val itemBinding  = ItemProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -32,9 +31,7 @@ class ProductAdapter(private val products: ArrayList<Product>,private val contex
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-
-        loadBackgroundColor(holder.binding.root.context){
-                color->
+        loadBackgroundColor(holder.binding.root.context) { color ->
             holder.binding.cardView.setBackgroundColor(Color.parseColor(color))
         }
 
@@ -56,12 +53,9 @@ class ProductAdapter(private val products: ArrayList<Product>,private val contex
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun updateProducts(newProducts: List<Product>) {
-        products.clear()
+        val startPosition = products.size
         products.addAll(newProducts)
-        notifyDataSetChanged()
+        notifyItemRangeInserted(startPosition, newProducts.size)
     }
-
-
 }

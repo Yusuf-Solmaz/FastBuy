@@ -6,8 +6,8 @@ import javax.inject.Inject
 
 class GetProductUseCase @Inject constructor(private val apiService: ApiService) {
 
-    fun getProduct() = rootFlow {
-        apiService.getProducts()
+    fun getProduct(limit: Int, skip: Int) = rootFlow {
+        apiService.getProducts(limit, skip)
     }
 
 }

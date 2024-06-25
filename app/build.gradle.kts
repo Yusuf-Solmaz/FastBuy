@@ -74,6 +74,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.firebase.config)
     implementation(libs.firebase.messaging)
+    implementation(libs.androidx.paging.common.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -112,5 +113,6 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.16.0")
 
     implementation ("com.github.sparrow007:carouselrecyclerview:1.2.4")
+
 
 }

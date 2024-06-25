@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yusuf.yusuf_mucahit_solmaz_final.core.AppResult.GeneralResult
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.product.Product
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getProductUseCase.GetProductUseCase
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getProductsByCategory.GetProductsByCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,13 +22,21 @@ class HomeViewModel @Inject constructor(
     private val _products = MutableLiveData<ProductState>()
     val products: LiveData<ProductState> = _products
 
+    private var currentPage = 0
+    private var isLastPage = false
+    private var isLoading = false
+
+    fun getProduct() {
+        if (isLastPage){
+            isLoading = false
+            resetPagination()
+        }
 
 
-
-     fun getProduct() {
+        isLoading = true
         _products.value = ProductState(isLoading = true)
         viewModelScope.launch {
-            getProductUseCase.getProduct().collect { result ->
+            getProductUseCase.getProduct(30, currentPage * 30).collect { result ->
                 when (result) {
                     is GeneralResult.Error -> {
                         _products.postValue(ProductState(
@@ -44,11 +53,22 @@ class HomeViewModel @Inject constructor(
                         ))
                     }
                     is GeneralResult.Success -> {
-                        _products.postValue(ProductState(
-                            isLoading = false,
-                            error = null,
-                            productResponse = result.data
-                        ))
+                        if (result.data?.products?.isEmpty() == true) {
+                            isLastPage = true
+                            isLoading = false
+                            resetPagination()
+                        } else {
+                            currentPage++
+                            val currentProducts = _products.value?.productResponse?.products.orEmpty()
+                            val updatedProducts : List<Product> = currentProducts + result.data?.products as List<Product>
+                            val updatedResponse = result.data.copy(products = updatedProducts)
+                            _products.postValue(ProductState(
+                                isLoading = false,
+                                error = null,
+                                productResponse = updatedResponse
+                            ))
+                        }
+                        isLoading = false
                     }
                 }
             }
@@ -86,7 +106,11 @@ class HomeViewModel @Inject constructor(
                     }
                 }
             }
-
         }
+    }
+
+    private fun resetPagination() {
+        currentPage = 0
+        isLastPage = false
     }
 }
