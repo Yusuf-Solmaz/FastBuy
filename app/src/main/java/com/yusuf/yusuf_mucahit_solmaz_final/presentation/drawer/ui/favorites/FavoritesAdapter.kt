@@ -1,6 +1,7 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.favorites
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +9,11 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.yusuf.yusuf_mucahit_solmaz_final.data.local.model.FavoriteProducts
+import com.yusuf.yusuf_mucahit_solmaz_final.data.mapper.toFavoriteProduct
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.ItemFavoriteProductBinding
 
-class FavoritesAdapter(private val favoriteProducts: ArrayList<FavoriteProducts>) :
+
+class FavoritesAdapter(private val favoriteProducts: ArrayList<FavoriteProducts>, private val favoriteOnclick: (FavoriteProducts) -> Unit) :
     RecyclerView.Adapter<FavoritesAdapter.FavoriteViewHolder>() {
 
     private var expandedPosition = -1
@@ -35,11 +38,14 @@ class FavoritesAdapter(private val favoriteProducts: ArrayList<FavoriteProducts>
         return FavoriteViewHolder(binding)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
         val favoriteProduct = favoriteProducts[position]
         holder.binding.apply {
             title.text = favoriteProduct.title
-            starRate.text = favoriteProduct.rating.toString()
+            shippingInformation.text = favoriteProduct.shippingInformation
+            price.text = "${favoriteProduct.price}$"
+
             Glide.with(productImage.context).load(favoriteProduct.productImage).into(productImage)
 
 
@@ -49,6 +55,15 @@ class FavoritesAdapter(private val favoriteProducts: ArrayList<FavoriteProducts>
             viewAllDetailsBtn.setOnClickListener {
                 val action = FavoritesFragmentDirections.actionNavFavoritesToDetailFragment(favoriteProduct.productId.toString())
                 it.findNavController().navigate(action)
+            }
+
+
+           checkBox.setOnCheckedChangeListener(null)
+            checkBox.isChecked = true
+
+            checkBox.setOnCheckedChangeListener { _, isChecked ->
+                favoriteOnclick(favoriteProduct)
+                Log.d("favoriteProduct", "Silindi: $favoriteProduct")
             }
 
 

@@ -41,9 +41,13 @@ class FavoritesFragment : Fragment() {
             view.setBackgroundColor(Color.parseColor(color))
         }
 
-        adapter = FavoritesAdapter(arrayListOf())
+        adapter = FavoritesAdapter(arrayListOf()){
+            product ->
+            viewModel.removeFavorite(product)
+        }
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         binding.recyclerView.adapter = adapter
+
 
         viewModel.favoriteProducts.observe(viewLifecycleOwner) { state ->
 

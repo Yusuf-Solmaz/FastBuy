@@ -1,5 +1,6 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.favorites
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
-    private val favoriteProductsDao: FavoriteProductsDao
+    private val favoriteProductsDao: FavoriteProductsDao,
+
 ) : ViewModel() {
 
     private val _favoriteProducts = MutableLiveData<FavoriteState>()
@@ -32,7 +34,7 @@ class FavoritesViewModel @Inject constructor(
             ))
             try {
                 val products = favoriteProductsDao.getAll()
-                    _favoriteProducts.postValue(
+                _favoriteProducts.postValue(
                         FavoriteState(
                             isLoading = false,
                             error = null,
@@ -48,6 +50,15 @@ class FavoritesViewModel @Inject constructor(
                     favoriteProductsResponse = emptyList()
                 ))
             }
+        }
+    }
+
+
+    fun removeFavorite(product: FavoriteProducts) {
+        viewModelScope.launch {
+            Log.d("product", "addOrRemoveFavorite: $product")
+            favoriteProductsDao.deleteProduct(product.productId)
+            getFavoriteProducts()
         }
     }
 }

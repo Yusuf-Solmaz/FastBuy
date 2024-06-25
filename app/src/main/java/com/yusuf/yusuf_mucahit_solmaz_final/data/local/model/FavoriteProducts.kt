@@ -12,5 +12,7 @@ data class FavoriteProducts(
     var productImage: String,
     var rating: Double,
     var title: String,
-    var description: String
+    var description: String,
+    var price: Double,
+    var shippingInformation: String
 )
