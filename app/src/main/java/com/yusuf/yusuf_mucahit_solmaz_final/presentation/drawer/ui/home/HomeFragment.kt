@@ -1,5 +1,6 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -56,6 +57,7 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -152,7 +154,7 @@ class HomeFragment : Fragment() {
 
 
             if (isLastPage && state.productResponse?.products?.isEmpty() == true) {
-                Toast.makeText(requireContext(), "Daha fazla ürün yok", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "No more products.", Toast.LENGTH_SHORT).show()
             }
         })
     }
