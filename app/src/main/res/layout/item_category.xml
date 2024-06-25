@@ -15,6 +15,7 @@
             android:background="@drawable/item_product_bg">
 
             <TextView
+                android:textColor="@color/white"
                 android:id="@+id/titleCategory"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
