@@ -141,20 +141,21 @@ class DetailFragment() : Fragment() {
                 }
 
                 viewModel.addToCartState.observe(viewLifecycleOwner) { state ->
-                    when {
-                        state.isLoading -> {
 
-                        }
+                    setVisibility(
+                        isLoading = state.isLoading,
+                        isError = state.error != null,
+                        isSuccess = state.success != null,
+                        loadingView = binding.profileLoadingErrorComponent.loadingLayout,
+                        errorView = binding.profileLoadingErrorComponent.errorLayout,
+                        successView = binding.detailLayout
+                    )
 
-                        state.error != null -> {
-
-                        }
-
-                        state.success != null -> {
+                        if(state.success != null) {
                             Toast.makeText(requireContext(), "Added to cart", Toast.LENGTH_SHORT)
                                 .show()
                         }
-                    }
+
 
                 }
             }
