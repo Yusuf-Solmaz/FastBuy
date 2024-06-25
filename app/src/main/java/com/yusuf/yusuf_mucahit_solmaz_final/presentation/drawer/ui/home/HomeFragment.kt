@@ -117,6 +117,14 @@ class HomeFragment : Fragment() {
                     saleAdapter.updateSaleProducts(randomProducts)
                 }
 
+            if (state.productResponse?.products?.isEmpty() == true){
+                binding.noDataTextView.visible()
+                binding.homeLayout.gone()
+            }
+            else{
+                binding.noDataTextView.gone()
+            }
+
         })
     }
 
