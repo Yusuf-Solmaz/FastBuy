@@ -34,69 +34,77 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/home_layout"
         android:visibility="visible">
 
-
-        <TextView
-            android:textColor="@color/mainBlue"
-            android:textStyle="bold"
-            android:id="@+id/textView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Sale"
-            android:textSize="30sp"
-            app:layout_constraintStart_toStartOf="@+id/saleRecyclerView"
-            app:layout_constraintTop_toBottomOf="@+id/carouselRecyclerview" />
-
-        <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
-            android:id="@+id/carouselRecyclerview"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="151dp"
-            android:layout_marginTop="16dp"
-            android:scaleType="fitXY"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:textStyle="bold"
-            android:textColor="@color/mainBlue"
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="All Products"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@+id/rv_products"
-            app:layout_constraintStart_toStartOf="@+id/saleRecyclerView" />
+            >
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_products"
-            android:layout_width="379dp"
-            android:layout_height="199dp"
-            android:layout_marginStart="13dp"
-            android:layout_marginEnd="21dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/saleRecyclerView"
-            android:layout_width="381dp"
-            android:layout_height="213dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView9"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.529"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+            <TextView
+                android:textColor="@color/mainBlue"
+                android:textStyle="bold"
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Sale"
+                android:textSize="30sp"
+                app:layout_constraintStart_toStartOf="@+id/saleRecyclerView"
+                app:layout_constraintTop_toBottomOf="@+id/carouselRecyclerview" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
+                android:id="@+id/carouselRecyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="151dp"
+                android:layout_marginTop="16dp"
+                android:scaleType="fitXY"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="All Products"
+                android:textColor="@color/mainBlue"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/saleRecyclerView"
+                app:layout_constraintTop_toBottomOf="@+id/saleRecyclerView" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_products"
+                android:layout_width="379dp"
+                android:layout_height="400dp"
+                android:layout_marginStart="13dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="21dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/saleRecyclerView"
+                android:layout_width="381dp"
+                android:layout_height="213dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.529"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
 
 
 

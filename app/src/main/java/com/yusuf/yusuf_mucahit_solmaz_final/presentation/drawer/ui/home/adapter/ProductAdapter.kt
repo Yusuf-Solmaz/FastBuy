@@ -41,6 +41,8 @@ class ProductAdapter(private val products: ArrayList<Product>, private val conte
             discount.text = "-%${products[position].discountPercentage}"
             availabilityStatus.text = products[position].availabilityStatus
 
+            price.text = "${products[position].price}$"
+
             setUpGlide(context,products[position].images[0],productImage,loadingAnimationView)
 
             cardView.setOnClickListener {

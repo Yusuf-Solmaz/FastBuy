@@ -4,25 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+
     <RatingBar
-        android:isIndicator="true"
+
         android:id="@+id/ratingBar"
-        android:layout_width="229dp"
-        android:layout_height="63dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="4dp"
+        android:layout_width="238dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="-55dp"
+        android:layout_marginBottom="4dp"
+        android:isIndicator="true"
         android:numStars="5"
         android:progressBackgroundTint="@color/white"
         android:progressTint="@android:color/holo_blue_light"
-        android:rating="3"
-        android:scaleX="0.5"
-        android:scaleY="0.5"
+        android:rating="5"
+        android:scaleX="0.3"
+
+        android:scaleY="0.3"
         android:secondaryProgressTint="@android:color/holo_blue_light"
         android:stepSize="1"
         android:tint="@android:color/holo_blue_light"
+        app:layout_constraintBottom_toTopOf="@+id/date"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.678"
-        app:layout_constraintStart_toStartOf="@+id/date"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView

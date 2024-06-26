@@ -62,7 +62,7 @@ class SearchProductAdapter (private  val products: ArrayList<Product>, private v
         holder.binding.apply {
             title.text = product.title
             starRate.text = product.rating.toString()
-            stock.text = "${context.getString(R.string.in_stock)} ${product.stock}"
+            stock.text = "${context.getString(R.string.in_stock)}: ${product.stock}"
             price.text = "${product.price}$"
             shippingInformationTextView.text = product.shippingInformation
 

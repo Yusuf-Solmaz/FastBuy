@@ -11,6 +11,7 @@
 
 
     <TextView
+        android:textStyle="bold"
         android:id="@+id/title"
         android:layout_width="216dp"
         android:layout_height="50dp"

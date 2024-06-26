@@ -39,6 +39,7 @@ class SettingsFragment : Fragment() {
         binding.btnColorGreen.setOnClickListener { updateBackgroundColor("#4CAF50", view) }
         binding.btnColorBlue.setOnClickListener { updateBackgroundColor("#2196F3", view) }
         binding.btnColorYellow.setOnClickListener { updateBackgroundColor("#FFEB3B", view) }
+        binding.btnColorWhite.setOnClickListener { updateBackgroundColor("#FFFFFF", view) }
 
         binding.btnLanguageTurkish.setOnClickListener { updateLocale("tr") }
         binding.btnLanguageEnglish.setOnClickListener { updateLocale("en") }
