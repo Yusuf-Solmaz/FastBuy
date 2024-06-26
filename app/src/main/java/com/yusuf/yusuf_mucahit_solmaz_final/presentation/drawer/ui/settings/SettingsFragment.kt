@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.Fragment
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
@@ -67,7 +69,11 @@ class SettingsFragment : Fragment() {
         Locale.setDefault(locale)
         val config = Configuration()
         config.setLocale(locale)
-        requireContext().resources.updateConfiguration(config, requireContext().resources.displayMetrics)
+
+
+        AppCompatDelegate.setApplicationLocales(
+            LocaleListCompat.create(Locale.forLanguageTag(languageCode))
+        )
 
         val sharedPref = requireActivity().getSharedPreferences("com.yusuf.yusuf_mucahit_solmaz_final", Context.MODE_PRIVATE) ?: return
         with(sharedPref.edit()) {
