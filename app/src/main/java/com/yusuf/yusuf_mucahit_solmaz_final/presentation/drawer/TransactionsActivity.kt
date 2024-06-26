@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide
 import com.yusuf.yusuf_mucahit_solmaz_final.MainActivity
 import com.yusuf.yusuf_mucahit_solmaz_final.R
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.AppUtils.getAppLocale
+import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.createDialog
 import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.repo.UserSessionRepository
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.ActivityTransactionsBinding
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.NavHeaderMainBinding
@@ -98,21 +99,16 @@ class TransactionsActivity: AppCompatActivity() {
     }
 
     private fun showLogoutDialog() {
-        AlertDialog.Builder(this)
-            .setTitle("Logout")
-            .setMessage("Are you sure you want to logout?")
-            .setPositiveButton("Yes") { _, _ ->
-                CoroutineScope(Dispatchers.IO).launch {
+        createDialog(this@TransactionsActivity, "Are you sure you want to logout?", "Logged out successfully"){
+            CoroutineScope(Dispatchers.IO).launch {
 
-                    session.logout()
-                    
-                    val intent = Intent(this@TransactionsActivity,MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
+                session.logout()
+
+                val intent = Intent(this@TransactionsActivity,MainActivity::class.java)
+                startActivity(intent)
+                finish()
             }
-            .setNegativeButton("No", null)
-            .show()
+        }
     }
 
     override fun attachBaseContext(newBase: Context) {
