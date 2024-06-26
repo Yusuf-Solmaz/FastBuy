@@ -69,7 +69,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    implementation(libs.firebase.auth)
+
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.firebase.config)
@@ -102,17 +102,14 @@ dependencies {
 
     implementation(libs.lottie.compose)
 
-
     implementation(libs.androidx.datastore.preferences)
 
-    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+    implementation (libs.glide)
 
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
-
-    implementation ("com.github.sparrow007:carouselrecyclerview:1.2.4")
+    implementation (libs.carouselrecyclerview)
 
 
 }
