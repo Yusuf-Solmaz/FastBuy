@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.yusuf.yusuf_mucahit_solmaz_final.R
 
 
@@ -68,8 +69,10 @@ object ViewUtils {
     fun setupGlide(context: Context, imageUrl:String, productImage: ImageView, loadingAnimationView: LottieAnimationView?){
         Glide.with(context)
             .load(imageUrl)
+            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
             .listener(loadingAnimationView?.let { GlideLoaderUtils().with(it, productImage) })
             .into(productImage)
             .clearOnDetach()
+
     }
 }
