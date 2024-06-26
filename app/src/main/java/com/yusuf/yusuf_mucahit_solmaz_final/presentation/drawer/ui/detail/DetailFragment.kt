@@ -18,19 +18,15 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.yusuf.yusuf_mucahit_solmaz_final.R
+import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.GlideLoaderUtils
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setVisibility
-import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.SessionManager
 import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.repo.UserSessionRepository
-import com.yusuf.yusuf_mucahit_solmaz_final.data.local.model.FavoriteProducts
 import com.yusuf.yusuf_mucahit_solmaz_final.data.mapper.toAddCartRequest
 import com.yusuf.yusuf_mucahit_solmaz_final.data.mapper.toFavoriteProduct
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.product.Product
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.updateUI
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.FragmentDetailBinding
-import com.yusuf.yusuf_mucahit_solmaz_final.di.AppModule.addToCart
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.detail.adapter.CommentsAdapter
-import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home.HomeFragmentArgs
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
 import javax.inject.Inject
@@ -77,7 +73,9 @@ class DetailFragment() : Fragment() {
         val id = args.id
 
 
-        viewModel.getProductById(id)
+        viewModel.getProductById(id){
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }
 
 
         viewModel.productDetail.observe(viewLifecycleOwner) { state ->
@@ -101,6 +99,7 @@ class DetailFragment() : Fragment() {
 
                 Glide.with(requireContext())
                     .load(state.productResponse.images[0])
+                    .listener(GlideLoaderUtils().with(loadingAnimationView, productImage))
                     .into(productImage)
                     .clearOnDetach()
 
@@ -133,9 +132,13 @@ class DetailFragment() : Fragment() {
                     binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
                         val favoriteProduct = state.productResponse.toFavoriteProduct()
                         if (isChecked) {
-                            viewModel.addOrRemoveFavorite(favoriteProduct)
+                            viewModel.addOrRemoveFavorite(favoriteProduct){
+                                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                            }
                         } else {
-                            viewModel.addOrRemoveFavorite(favoriteProduct)
+                            viewModel.addOrRemoveFavorite(favoriteProduct){
+                                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                 }
