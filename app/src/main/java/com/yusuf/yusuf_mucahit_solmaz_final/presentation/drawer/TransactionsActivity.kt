@@ -20,6 +20,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
@@ -56,8 +57,6 @@ class TransactionsActivity: AppCompatActivity() {
         _binding = ActivityTransactionsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        window.statusBarColor = Color.WHITE
-
         setSupportActionBar(binding.appBarMain.toolbar)
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
@@ -77,9 +76,12 @@ class TransactionsActivity: AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.nav_favorites) {
                 binding.appBarMain.toolbar.setBackgroundResource(R.drawable.favorites_appbar_bg)
+                window.statusBarColor = ContextCompat.getColor(this, R.color.statusBarRed)
+
             }
             else{
                 binding.appBarMain.toolbar.setBackgroundResource(R.drawable.appbar_bg)
+                window.statusBarColor = ContextCompat.getColor(this, R.color.statusBarBlue)
             }
         }
 
