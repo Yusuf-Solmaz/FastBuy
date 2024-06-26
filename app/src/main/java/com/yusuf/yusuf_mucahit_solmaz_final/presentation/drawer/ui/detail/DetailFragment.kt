@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.yusuf.yusuf_mucahit_solmaz_final.R
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.GlideLoaderUtils
+import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setUpGlide
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setVisibility
 import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.repo.UserSessionRepository
 import com.yusuf.yusuf_mucahit_solmaz_final.data.mapper.toAddCartRequest
@@ -97,11 +98,8 @@ class DetailFragment() : Fragment() {
                 discount.text = "(-%${state.productResponse.discountPercentage})"
                 rating.text = state.productResponse.rating.toString()
 
-                Glide.with(requireContext())
-                    .load(state.productResponse.images[0])
-                    .listener(GlideLoaderUtils().with(loadingAnimationView, productImage))
-                    .into(productImage)
-                    .clearOnDetach()
+
+                setUpGlide(requireContext(),state.productResponse.images[0],productImage,loadingAnimationView)
 
                 description.text = state.productResponse.description
                 stock.text = "In Stock: ${state.productResponse.stock}"

@@ -89,12 +89,12 @@ class HomeFragment : Fragment() {
             })
         }
 
-        carouselAdapter = CarouselAdapter(carouselProducts)
+        carouselAdapter = CarouselAdapter(requireContext(),carouselProducts)
         binding.carouselRecyclerview.apply {
             adapter = carouselAdapter
         }
 
-        saleAdapter = SaleAdapter(saleProducts)
+        saleAdapter = SaleAdapter(requireContext(),saleProducts)
         binding.saleRecyclerView.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = saleAdapter

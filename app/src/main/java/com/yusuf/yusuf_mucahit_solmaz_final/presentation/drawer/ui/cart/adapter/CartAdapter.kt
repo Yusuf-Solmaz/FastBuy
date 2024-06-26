@@ -4,11 +4,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.GlideLoaderUtils
+import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setUpGlide
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.userCart.Product
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.ItemCartBinding
+import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.cart.CartFragmentDirections
 
 class CartAdapter(private val products: ArrayList<Product>,private val context: Context) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
     class CartViewHolder(val binding: ItemCartBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -24,17 +27,20 @@ class CartAdapter(private val products: ArrayList<Product>,private val context: 
         return products.size
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
 
         holder.binding.apply {
             title.text = products[position].title
-            amount.text = products[position].quantity.toString()
-            price.text = products[position].price.toString()
+            amount.text = "Amount: ${products[position].quantity}"
+            price.text = "${products[position].price}$"
 
-            Glide.with(context)
-                .load(products[position].thumbnail)
-                .listener(GlideLoaderUtils().with(loadingAnimationView, productImage))
-                .into(productImage)
+            setUpGlide(context,products[position].thumbnail,productImage,loadingAnimationView)
+
+            root.setOnClickListener {
+                val action = CartFragmentDirections.actionNavCartToDetailFragment(products[position].id.toString())
+                root.findNavController().navigate(action)
+            }
         }
     }
 

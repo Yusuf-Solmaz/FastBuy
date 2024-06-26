@@ -25,6 +25,7 @@ import com.bumptech.glide.request.target.Target
 import com.yusuf.yusuf_mucahit_solmaz_final.R
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.GlideLoaderUtils
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.gone
+import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setUpGlide
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.visible
 import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.repo.UserSessionRepository
 import com.yusuf.yusuf_mucahit_solmaz_final.data.mapper.toAddCartRequest
@@ -74,12 +75,7 @@ class SearchProductAdapter (private  val products: ArrayList<Product>, private v
 
             ratingBar.rating = product.rating.toFloat()
 
-
-            Glide.with(context)
-                .load(product.images[0])
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .listener(GlideLoaderUtils().with(loadingAnimationView, productImage))
-                .into(productImage)
+            setUpGlide(context,product.images[0],productImage,loadingAnimationView)
 
             addToCartBtn.setOnClickListener {
                 showAddToCartDialog(product)

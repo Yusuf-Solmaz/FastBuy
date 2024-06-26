@@ -1,6 +1,7 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home.adapter
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,12 +9,13 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.GlideLoaderUtils
+import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setUpGlide
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.product.Product
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.SaleItemBinding
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home.HomeFragmentDirections
 import java.text.DecimalFormat
 
-class SaleAdapter(private val saleProducts: ArrayList<Product>) : RecyclerView.Adapter<SaleAdapter.SaleViewHolder>() {
+class SaleAdapter(private val context: Context, private val saleProducts: ArrayList<Product>) : RecyclerView.Adapter<SaleAdapter.SaleViewHolder>() {
     class SaleViewHolder(val binding: SaleItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
     }
@@ -47,10 +49,8 @@ class SaleAdapter(private val saleProducts: ArrayList<Product>) : RecyclerView.A
             val formattedPrice = decimalFormat.format(oldPrice)
             saleItemOldPrice.text = ("($formattedPrice$)")
 
-            Glide.with(root.context)
-                .load(saleProducts[position].images[0])
-                .listener(GlideLoaderUtils().with(loadingAnimationView, saleImage))
-                .into(saleImage)
+
+            setUpGlide(context,saleProducts[position].images[0],saleImage,loadingAnimationView)
         }
 
     }

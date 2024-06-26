@@ -64,10 +64,11 @@ object ViewUtils {
             .show()
     }
 
-    fun setUpGlide(context: Context, imageUrl:String, productImage: ImageView, loadingAnimationView: LottieAnimationView){
+    fun setUpGlide(context: Context, imageUrl:String, productImage: ImageView, loadingAnimationView: LottieAnimationView?){
         Glide.with(context)
             .load(imageUrl)
-            .listener(GlideLoaderUtils().with(loadingAnimationView, productImage))
+            .listener(loadingAnimationView?.let { GlideLoaderUtils().with(it, productImage) })
             .into(productImage)
+            .clearOnDetach()
     }
 }

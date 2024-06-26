@@ -42,7 +42,7 @@ class FavoritesFragment : Fragment() {
             view.setBackgroundColor(Color.parseColor(color))
         }
 
-        adapter = FavoritesAdapter(arrayListOf()){
+        adapter = FavoritesAdapter(requireContext(),arrayListOf()){
             product ->
             viewModel.removeFavorite(product){
                 error->

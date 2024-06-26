@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.GlideLoaderUtils
+import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setUpGlide
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.product.Product
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.ItemProductBinding
@@ -40,11 +41,7 @@ class ProductAdapter(private val products: ArrayList<Product>, private val conte
             discount.text = "-%${products[position].discountPercentage}"
             availabilityStatus.text = products[position].availabilityStatus
 
-            Glide.with(context)
-                .load(products[position].images[0])
-                .listener(GlideLoaderUtils().with(loadingAnimationView,productImage))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(productImage)
+            setUpGlide(context,products[position].images[0],productImage,loadingAnimationView)
 
             cardView.setOnClickListener {
                 val action = HomeFragmentDirections.actionNavHomeToDetailFragment(products[position].id.toString())
