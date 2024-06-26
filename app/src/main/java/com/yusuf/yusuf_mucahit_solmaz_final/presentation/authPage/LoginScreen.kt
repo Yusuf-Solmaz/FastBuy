@@ -1,5 +1,6 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.presentation.authPage
 
+import android.app.Activity
 import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -23,6 +24,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import com.yusuf.yusuf_mucahit_solmaz_final.R
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.authPage.viewModel.AuthViewModel
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.components.ButtonComponent
@@ -39,6 +42,8 @@ fun LoginScreen(
     val sessionState by viewModel.sessionState.collectAsState()
     val context = LocalContext.current
 
+    val lifecycleOwner = LocalContext.current as LifecycleOwner
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -46,6 +51,13 @@ fun LoginScreen(
         sessionState.user?.let {
             val intent = Intent(context, TransactionsActivity::class.java)
             context.startActivity(intent)
+
+            lifecycleOwner.lifecycle.addObserver(object : DefaultLifecycleObserver {
+                override fun onStop(owner: LifecycleOwner) {
+                    (context as? Activity)?.finish()
+                    owner.lifecycle.removeObserver(this)
+                }
+            })
         }
     }
 
