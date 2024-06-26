@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.yusuf.yusuf_mucahit_solmaz_final.R
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.createDialog
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setVisibility
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
@@ -73,22 +74,22 @@ class CartFragment : Fragment() {
 
             if (state.cartResponse != null){
                 totalPrice = state.cartResponse.total
-                Log.e("CartFragment", "totalPrice: $totalPrice")
+
                 try {
                     val carts = state.cartResponse.carts
                     if (carts.isNotEmpty()) {
                         binding.errorEmptyText.visibility = View.GONE
                         cartAdapter.updateProducts(carts[0].products)
-                        binding.totalPrice.text = "Total: ${carts[0].discountedTotal}$"
+                        binding.totalPrice.text = "${requireContext().getString(R.string.total)}: ${carts[0].discountedTotal}$"
 
                         binding.discountedPrice.paintFlags = binding.discountedPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                         binding.discountedPrice.text = "${carts[0].total}$"
                     } else {
                         binding.errorEmptyText.visibility = View.VISIBLE
-                        Log.e("CartFragment", "Carts list is  empty.")
+
                     }
                 } catch (e: Exception) {
-                    Log.e("CartFragment", "Error updating cart adapter: ${e.message}")
+                    Toast.makeText(requireContext(), requireContext().getString(R.string.update_cart_error), Toast.LENGTH_SHORT).show()
                 }
 
 
@@ -119,7 +120,7 @@ class CartFragment : Fragment() {
     }
 
     private fun showDeleteCartConfirmationDialog(view: View?) {
-        createDialog(requireContext(), "Are you sure you want to delete the cart?","Cart Deleted Successfully"){
+        createDialog(requireContext(), requireContext().getString(R.string.delete_cart_confirmation),requireContext().getString(R.string.delete_cart_confirmation_message)){
             val action = CartFragmentDirections.actionNavCartToNavHome()
             findNavController().navigate(action)
         }
@@ -127,13 +128,13 @@ class CartFragment : Fragment() {
 
     private fun showConfirmationDialog(view: View?) {
         if (totalPrice >0){
-            createDialog(requireContext(), "Are you sure you want to proceed with the transaction?","Transaction Successful"){
+            createDialog(requireContext(), requireContext().getString(R.string.pay_confirmation),requireContext().getString(R.string.pay_confirmation_message)){
                 val action = CartFragmentDirections.actionNavCartToNavHome()
                 findNavController().navigate(action)
             }
         }
         else{
-            Toast.makeText(requireContext(), "The cart is empty", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), requireContext().getString(R.string.empty_cart_error), Toast.LENGTH_SHORT).show()
         }
 
     }

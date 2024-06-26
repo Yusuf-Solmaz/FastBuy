@@ -40,7 +40,7 @@ class DetailViewModel @Inject constructor(
             getProductByIdUseCase.getProductById(id).collect { result ->
                 when (result) {
                     is GeneralResult.Error -> {
-                        Log.d("getProductById", "getProductById: ${result.message}")
+
                         _productDetail.postValue(
                             DetailState(
                                 error = result.message,
@@ -51,7 +51,7 @@ class DetailViewModel @Inject constructor(
                     }
 
                     GeneralResult.Loading -> {
-                        Log.d("getProductById", "getProductById: Loading")
+
                         _productDetail.postValue(
                             DetailState(
                                 isLoading = true,
@@ -62,7 +62,7 @@ class DetailViewModel @Inject constructor(
                     }
 
                     is GeneralResult.Success -> {
-                        Log.d("getProductById", "getProductById: ${result.data}")
+
                         _productDetail.postValue(
                             DetailState(
                                 isLoading = false,
@@ -120,7 +120,7 @@ class DetailViewModel @Inject constructor(
             addToCartUseCase.addToCart(addCartRequest).collect { result ->
                 when (result) {
                     is GeneralResult.Error -> {
-                        Log.d("addToCart", "addToCart: ${result.message}")
+
                         _addToCartState.postValue(
                             AddToCartState(
                                 isLoading = false,
@@ -130,7 +130,7 @@ class DetailViewModel @Inject constructor(
                         )
                     }
                     GeneralResult.Loading -> {
-                        Log.d("addToCart", "addToCart: Loading")
+
                         _addToCartState.postValue(
                             AddToCartState(
                                 isLoading = true
@@ -138,7 +138,6 @@ class DetailViewModel @Inject constructor(
                         )
                     }
                     is GeneralResult.Success -> {
-                        Log.d("addToCart", "addToCart: ${result.data}")
 
                         _addToCartState.postValue(
                             AddToCartState(

@@ -68,7 +68,7 @@ class FavoritesFragment : Fragment() {
                 adapter.updateProducts(state.favoriteProductsResponse)
             }
             if (state.favoriteProductsResponse.isNullOrEmpty()){
-                Log.d("stateelse", "onViewCreated: $state.favoriteProductsResponse")
+
                 binding.emptyListText.visible()
             }
             else{

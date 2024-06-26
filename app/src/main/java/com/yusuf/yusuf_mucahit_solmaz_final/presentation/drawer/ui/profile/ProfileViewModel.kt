@@ -29,9 +29,6 @@ class ProfileViewModel @Inject constructor(
     private val _updateProfile = MutableLiveData<UpdateProfileState>()
     val updateProfile: LiveData<UpdateProfileState> = _updateProfile
 
-    init {
-        Log.d("sessionProfile", "init: ${session.getUserId()}")
-    }
 
     fun getUserProfile() {
         _profile.value = ProfileState(isLoading = true)
@@ -39,7 +36,7 @@ class ProfileViewModel @Inject constructor(
             getUserProfileUseCase.getUserProfile(session.getUserId()).collect { result ->
                 when (result) {
                     is GeneralResult.Error -> {
-                        Log.d("getUserProfile", "getUserProfile: ${result.message}")
+
                         _profile.postValue(
                             ProfileState(
                                 error = result.message,
@@ -50,7 +47,7 @@ class ProfileViewModel @Inject constructor(
                     }
 
                     GeneralResult.Loading -> {
-                        Log.d("getUserProfile", "getUserProfile: Loading")
+
                         _profile.postValue(
                             ProfileState(
                                 isLoading = true,
@@ -61,7 +58,7 @@ class ProfileViewModel @Inject constructor(
                     }
 
                     is GeneralResult.Success -> {
-                        Log.d("getUserProfile", "getUserProfile: ${result.data}")
+
                         _profile.postValue(
                             ProfileState(
                                 isLoading = false,

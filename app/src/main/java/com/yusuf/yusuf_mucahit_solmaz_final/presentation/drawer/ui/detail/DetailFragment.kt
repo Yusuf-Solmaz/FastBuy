@@ -102,7 +102,7 @@ class DetailFragment() : Fragment() {
                 setUpGlide(requireContext(),state.productResponse.images[0],productImage,loadingAnimationView)
 
                 description.text = state.productResponse.description
-                stock.text = "In Stock: ${state.productResponse.stock}"
+                stock.text = "${requireContext().getString(R.string.in_stock)}: ${state.productResponse.stock}"
                 stock.setTextColor(
                     if (state.productResponse.availabilityStatus == "Low Stock") {
                         resources.getColorStateList(R.color.statusRed)
@@ -153,7 +153,7 @@ class DetailFragment() : Fragment() {
                     )
 
                         if(state.success != null) {
-                            Toast.makeText(requireContext(), "Added to cart", Toast.LENGTH_SHORT)
+                            Toast.makeText(requireContext(), requireContext().getString(R.string.added_to_cart), Toast.LENGTH_SHORT)
                                 .show()
                         }
 
@@ -182,16 +182,16 @@ class DetailFragment() : Fragment() {
 
             if (quantity != null ) {
                 if (quantity.toInt() > product.stock){
-                    Toast.makeText(requireContext(), "Quantity must be less than or equal to stock", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), requireContext().getString(R.string.out_of_stock), Toast.LENGTH_SHORT).show()
 
                 }
                 else if (quantity > 0) {
                     val cartProduct = product.toAddCartRequest(session.getUserId(), quantity.toString())
-                    Log.d("cartProduct", "showAddToCartDialog: $cartProduct")
+
                     viewModel.addToCart(cartProduct)
                     dialog.dismiss()
                 } else {
-                    Toast.makeText(requireContext(), "Please enter a valid quantity", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), requireContext().getString(R.string.invalid_quantity), Toast.LENGTH_SHORT).show()
                 }
             }
 

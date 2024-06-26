@@ -27,8 +27,7 @@ import androidx.navigation.NavHostController
 import com.yusuf.yusuf_mucahit_solmaz_final.R
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.authPage.viewModel.AuthViewModel
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.components.ButtonComponent
-import com.yusuf.yusuf_mucahit_solmaz_final.presentation.components.ClickableLoginTextComponent
-import com.yusuf.yusuf_mucahit_solmaz_final.presentation.components.DividerTextComponent
+
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.components.Loader
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.components.PasswordFieldComponent
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.components.TextFieldComponent
@@ -55,7 +54,7 @@ fun LoginScreen(
 
 
     if  (authState.error != null){
-        Toast.makeText(context, "Incorrect username or password", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(R.string.login_error), Toast.LENGTH_SHORT).show()
     }
 
     if (authState.isLoading) {
@@ -81,18 +80,18 @@ fun LoginScreen(
                 TextFieldComponent(
                     email,
                     onValueChange = { updatedEmail -> email = updatedEmail.trim() },
-                    label = "Nickname",
+                    label = context.getString(R.string.nickname),
                     painterResource = painterResource(id = R.drawable.ic_profile)
                 )
                 PasswordFieldComponent(
                     password,
-                    label = "Password",
+                    label = context.getString(R.string.password),
                     onValueChange = { updatedPassword -> password = updatedPassword.trim() },
                     painterResource(id = R.drawable.lock_icon)
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
-                ButtonComponent(value = "Login", onClick = {
+                ButtonComponent(value = context.getString(R.string.loginButton), onClick = {
                     viewModel.login(email, password)
                 })
 

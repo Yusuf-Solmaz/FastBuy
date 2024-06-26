@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.yusuf.yusuf_mucahit_solmaz_final.navigation.MainViewModel
@@ -24,19 +25,20 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnBoardingScreen(mainViewModel: MainViewModel, navController: NavController) {
+    val context = LocalContext.current
+    val pager = getOnboardingPages(context)
     val pagerState = rememberPagerState(initialPage = 0) {
         pager.size
     }
     val scope = rememberCoroutineScope()
 
     Scaffold(
-        content = {
-            paddingValues ->
-
-            Column(modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)) {
-
+        content = { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+            ) {
                 HorizontalPager(
                     state = pagerState,
                     modifier = Modifier.weight(1f),
@@ -81,7 +83,5 @@ fun OnBoardingScreen(mainViewModel: MainViewModel, navController: NavController)
             }
         }
     )
-
-
 }
 

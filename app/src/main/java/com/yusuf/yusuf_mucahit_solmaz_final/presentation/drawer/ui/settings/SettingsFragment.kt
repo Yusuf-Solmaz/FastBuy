@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.Fragment
+import com.yusuf.yusuf_mucahit_solmaz_final.R
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.saveBackgroundColor
@@ -50,9 +51,9 @@ class SettingsFragment : Fragment() {
                 loadBackgroundColor(requireContext()) { color ->
                     view.setBackgroundColor(Color.parseColor(color))
                 }
-                Toast.makeText(context, "Background color updated successfully.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, requireContext().getString(R.string.background_color_updated), Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(context, "Background color update failed.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, requireContext().getString(R.string.background_color_update_failed), Toast.LENGTH_SHORT).show()
             }
         }
     }

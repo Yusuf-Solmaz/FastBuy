@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.yusuf.yusuf_mucahit_solmaz_final.R
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.GlideLoaderUtils
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setUpGlide
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.userCart.Product
@@ -32,7 +33,7 @@ class CartAdapter(private val products: ArrayList<Product>,private val context: 
 
         holder.binding.apply {
             title.text = products[position].title
-            amount.text = "Amount: ${products[position].quantity}"
+            amount.text = "${context.getString(R.string.amount)}: ${products[position].quantity}"
             price.text = "${products[position].price}$"
 
             setUpGlide(context,products[position].thumbnail,productImage,loadingAnimationView)

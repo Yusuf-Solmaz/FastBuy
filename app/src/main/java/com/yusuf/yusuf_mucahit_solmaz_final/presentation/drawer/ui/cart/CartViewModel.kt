@@ -57,7 +57,6 @@ class CartViewModel @Inject constructor(
                     }
 
                     is GeneralResult.Success -> {
-                        Log.d("getUserCart", "getUserCart: ${result.data}")
                         _cart.postValue(
                             CartState(
                                 isLoading = false,

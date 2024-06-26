@@ -12,8 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import com.yusuf.yusuf_mucahit_solmaz_final.R
 import com.yusuf.yusuf_mucahit_solmaz_final.ui.theme.Blue
 
 @Composable
@@ -23,6 +25,7 @@ fun NextBackButton(
     onBackClick: () -> Unit,
     onGetStartedClick: () -> Unit,
 ){
+    val context = LocalContext.current
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -50,7 +53,7 @@ fun NextBackButton(
             ),
             shape = RoundedCornerShape(4.dp)
         ) {
-            Text(text = if(currentPage == 2) "Get Started" else "Next")
+            Text(text = if(currentPage == 2) context.getString(R.string.get_started) else context.getString(R.string.next))
         }
 
     }

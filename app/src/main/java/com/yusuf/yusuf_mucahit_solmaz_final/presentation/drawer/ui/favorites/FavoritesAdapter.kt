@@ -66,7 +66,7 @@ class FavoritesAdapter(private val context: Context, private val favoriteProduct
 
             checkBox.setOnCheckedChangeListener { _, isChecked ->
                 favoriteOnclick(favoriteProduct)
-                Log.d("favoriteProduct", "Silindi: $favoriteProduct")
+
             }
 
 

@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Yusuf_Mucahit_Solmaz_Final</string>
     <string name="favorite_item_deletion_dialog_text">Silmek istediğinizden emin misiniz?</string>
     <string name="favorite_item_deletion_dialog_positive_button">Evet</string>
@@ -8,15 +6,51 @@
     <string name="title_activity_main">Ana Sayfa</string>
     <string name="navigation_drawer_open">Navigasyon çekmecesini aç</string>
     <string name="navigation_drawer_close">Navigasyon çekmecesini kapat</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigasyon başlığı</string>
     <string name="action_settings">Ayarlar</string>
-
     <string name="menu_home">Ana Sayfa</string>
+    <string name="menu_gallery">Galeri</string>
+    <string name="menu_slideshow">Slayt Gösterisi</string>
     <string name="menu_favorites">Favoriler</string>
+    <string name="hello_blank_fragment">Merhaba boş fragman</string>
     <string name="menu_category">Kategori</string>
     <string name="menu_detail">Ürün Detayı</string>
     <string name="menu_cart">Sepet</string>
     <string name="menu_profile">Profil</string>
     <string name="menu_search">Ara</string>
     <string name="menu_settings">Ayarlar\n</string>
+    <string name="change_language">Dil Değiştir</string>
+    <string name="menu_logout">Çıkış Yap</string>
+    <string name="onboarding_title_1">Kolaylıkla Keşfedin ve Alışveriş Yapın</string>
+    <string name="onboarding_description_1">FastBuy\'a adım atın ve moda, teknoloji, ev gereçleri ve daha fazlasını keşfedeceğiniz güvenilir rehberinizde alışveriş yapın. Özel fırsatları kaçırmayın.</string>
+    <string name="onboarding_title_2">Alışveriş Deneyiminizi Kişiselleştirin</string>
+    <string name="onboarding_description_2">FastBuy ile her alışveriş deneyimini kişiselleştirin. İhtiyaçlarınıza uygun ürünler bulun, öneriler alın ve favori ürünlerinizi takip edin.</string>
+    <string name="onboarding_title_3">Alışverişi Basit Hale Getirin</string>
+    <string name="onboarding_description_3">Alışveriş deneyiminizi basitleştiren FastBuy\'a hoş geldiniz. Moda, elektronik, ev dekorasyonu ve daha fazlasında binlerce seçenek arasından göz atın, indirimleri ve kampanyaları takip edin.</string>
+    <string name="login_error">Kullanıcı adı veya şifre hatalı</string>
+    <string name="nickname">Kullanıcı Adı</string>
+    <string name="password">Şifre</string>
+    <string name="loginButton">Giriş Yap</string>
+    <string name="get_started">Başlamak İçin</string>
+    <string name="next">İleri</string>
+    <string name="amount">Miktar</string>
+    <string name="delete_cart_confirmation">Sepeti silmek istediğinizden emin misiniz?</string>
+    <string name="delete_cart_confirmation_message">Sepet başarıyla silindi</string>
+    <string name="pay_confirmation">İşlemi gerçekleştirmek istediğinizden emin misiniz?</string>
+    <string name="pay_confirmation_message">İşlem başarıyla gerçekleştirildi</string>
+    <string name="empty_cart_error">Sepet boş.</string>
+    <string name="update_cart_error">Sepet güncellenemedi</string>
+    <string name="total">Toplam</string>
+    <string name="in_stock">Stokta</string>
+    <string name="added_to_cart">Sepete eklendi</string>
+    <string name="out_of_stock">Stok miktarından az veya eşit bir miktar girin.</string>
+    <string name="invalid_quantity">Lütfen geçerli bir miktar girin.</string>
+    <string name="no_more_products">Daha fazla ürün yok.</string>
+    <string name="profile_updated">Profil güncellendi</string>
+    <string name="background_color_updated">Arka plan rengi başarıyla güncellendi.</string>
+    <string name="background_color_update_failed">Arka plan güncelleme başarısız</string>
+    <string name="logout_dialog_title">Çıkış yapmak istediğinizden emin misiniz?</string>
+    <string name="logout_dialog_message">Başarıyla çıkış yapıldı</string>
 </resources>

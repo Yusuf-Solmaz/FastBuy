@@ -62,7 +62,7 @@ class SearchProductAdapter (private  val products: ArrayList<Product>, private v
         holder.binding.apply {
             title.text = product.title
             starRate.text = product.rating.toString()
-            stock.text = "Stock: ${product.stock}"
+            stock.text = "${context.getString(R.string.in_stock)} ${product.stock}"
             price.text = "${product.price}$"
             shippingInformationTextView.text = product.shippingInformation
 
@@ -108,20 +108,18 @@ class SearchProductAdapter (private  val products: ArrayList<Product>, private v
 
             if (quantity != null ) {
                 if (quantity.toInt() > product.stock){
-                    Toast.makeText(context, "Quantity must be less than or equal to stock", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(R.string.out_of_stock), Toast.LENGTH_SHORT).show()
 
                 }
                 else if (quantity > 0) {
                     val cartProduct = product.toAddCartRequest(session.getUserId(), quantity.toString())
-                    Log.d("cartProduct", "showAddToCartDialog: $cartProduct")
+
                     addToCart(cartProduct)
                     dialog.dismiss()
                 } else {
-                    Toast.makeText(context, "Please enter a valid quantity", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(R.string.invalid_quantity), Toast.LENGTH_SHORT).show()
                 }
             }
-
-
         }
 
         dialog.show()

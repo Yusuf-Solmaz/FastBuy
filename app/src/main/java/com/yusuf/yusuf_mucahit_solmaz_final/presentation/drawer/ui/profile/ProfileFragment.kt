@@ -85,7 +85,7 @@ class ProfileFragment : Fragment() {
             )
 
             if (state.success != null) {
-                Toast.makeText(requireContext(), "Profile updated", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), requireContext().getString(R.string.profile_updated), Toast.LENGTH_SHORT).show()
                 val action = ProfileFragmentDirections.actionNavProfileToNavHome()
                 findNavController().navigate(action)
             }

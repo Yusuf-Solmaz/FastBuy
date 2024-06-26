@@ -50,9 +50,4 @@ class ProductAdapter(private val products: ArrayList<Product>, private val conte
         }
     }
 
-    fun updateProducts(newProducts: List<Product>) {
-        val startPosition = products.size
-        products.addAll(newProducts)
-        notifyItemRangeInserted(startPosition, newProducts.size)
-    }
 }

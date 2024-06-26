@@ -64,7 +64,7 @@ class SearchViewModel @Inject constructor(
             addToCartUseCase.addToCart(addCartRequest).collect { result ->
                 when (result) {
                     is GeneralResult.Error -> {
-                        Log.d("addToCart", "addToCart: ${result.message}")
+
                         _searchAddToCart.postValue(
                             SearchAddToCartState(
                                 isLoading = false,
@@ -74,7 +74,7 @@ class SearchViewModel @Inject constructor(
                         )
                     }
                     GeneralResult.Loading -> {
-                        Log.d("addToCart", "addToCart: Loading")
+
                         _searchAddToCart.postValue(
                             SearchAddToCartState(
                                 isLoading = true
@@ -82,7 +82,6 @@ class SearchViewModel @Inject constructor(
                         )
                     }
                     is GeneralResult.Success -> {
-                        Log.d("addToCart", "addToCart: ${result.data}")
 
                         _searchAddToCart.postValue(
                             SearchAddToCartState(

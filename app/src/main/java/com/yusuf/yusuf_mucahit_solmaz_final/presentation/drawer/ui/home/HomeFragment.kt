@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.yusuf.yusuf_mucahit_solmaz_final.R
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.gone
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setVisibility
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.visible
@@ -154,7 +155,7 @@ class HomeFragment : Fragment() {
 
 
             if (isLastPage && state.productResponse?.products?.isEmpty() == true) {
-                Toast.makeText(requireContext(), "No more products.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), requireContext().getString(R.string.no_more_products), Toast.LENGTH_SHORT).show()
             }
         })
     }

@@ -15,6 +15,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.yusuf.yusuf_mucahit_solmaz_final.R
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setVisibility
 import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.SessionManager
 import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.repo.UserSessionRepository
@@ -76,7 +77,7 @@ class SearchFragment : Fragment() {
             )
 
             if (state.success != null) {
-                Toast.makeText(requireContext(), "Added to cart", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), requireContext().getString(R.string.added_to_cart), Toast.LENGTH_SHORT).show()
             }
         }
 

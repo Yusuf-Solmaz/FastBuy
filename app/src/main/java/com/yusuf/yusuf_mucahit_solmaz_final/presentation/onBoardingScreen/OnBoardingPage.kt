@@ -17,15 +17,16 @@ import com.yusuf.yusuf_mucahit_solmaz_final.R
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.components.LoadingLottie
 import com.yusuf.yusuf_mucahit_solmaz_final.ui.theme.Blue
 
+
+
 @Composable
-fun OnboardingPage(page: Page){
-
-    Column(Modifier.fillMaxSize(),
+fun OnboardingPage(page: Page) {
+    Column(
+        Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceEvenly) {
-
+        verticalArrangement = Arrangement.SpaceEvenly
+    ) {
         LoadingLottie(resId = page.lottieFile)
-
         Text(
             text = page.title,
             style = TextStyle(
@@ -44,6 +45,6 @@ fun OnboardingPage(page: Page){
             ),
             modifier = Modifier
                 .padding(horizontal = 20.dp, vertical = 2.dp)
-            )
+        )
     }
 }

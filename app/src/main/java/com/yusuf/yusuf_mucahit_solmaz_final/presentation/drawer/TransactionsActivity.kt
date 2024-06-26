@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -19,6 +20,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.yusuf.yusuf_mucahit_solmaz_final.MainActivity
 import com.yusuf.yusuf_mucahit_solmaz_final.R
@@ -48,14 +51,15 @@ class TransactionsActivity: AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
 
         binding = ActivityTransactionsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        window.statusBarColor = Color.WHITE
+
         setSupportActionBar(binding.appBarMain.toolbar)
-
-
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
@@ -99,7 +103,7 @@ class TransactionsActivity: AppCompatActivity() {
     }
 
     private fun showLogoutDialog() {
-        createDialog(this@TransactionsActivity, "Are you sure you want to logout?", "Logged out successfully"){
+        createDialog(this@TransactionsActivity, this.getString(R.string.logout_dialog_title), this.getString(R.string.logout_dialog_message)){
             CoroutineScope(Dispatchers.IO).launch {
 
                 session.logout()

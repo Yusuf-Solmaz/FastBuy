@@ -32,19 +32,12 @@ class CarouselAdapter(private val context: Context,val products: ArrayList<Produ
         holder.binding.apply {
             corouselTitle.text = products[position].title
 
-            setUpGlide(root.context,products[position].images[0],corouselImage,null)
+            setUpGlide(context,products[position].images[0],corouselImage,null)
 
             holder.binding.root.setOnClickListener {
                 val action = HomeFragmentDirections.actionNavHomeToDetailFragment(products[position].id.toString())
                 it.findNavController().navigate(action)
             }
         }
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun updateProducts(newProducts: List<Product>) {
-        products.clear()
-        products.addAll(newProducts)
-        notifyDataSetChanged()
     }
 }

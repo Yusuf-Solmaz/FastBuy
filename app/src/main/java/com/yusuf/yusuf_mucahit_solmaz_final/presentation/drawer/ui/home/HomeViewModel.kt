@@ -81,7 +81,7 @@ class HomeViewModel @Inject constructor(
             getProductsByCategoryUseCase.getProductsByCategory(category).collect { result ->
                 when(result){
                     is GeneralResult.Error -> {
-                        Log.d("getProductsByCategory", "getProductsByCategory: ${result.message}")
+
                         _products.postValue(ProductState(
                             error = result.message,
                             isLoading = false,
@@ -97,7 +97,7 @@ class HomeViewModel @Inject constructor(
                         ))
                     }
                     is GeneralResult.Success -> {
-                        Log.d("getProductsByCategory", "getProductsByCategory: ${result.data}")
+
                         _products.postValue(ProductState(
                             isLoading = false,
                             error = null,
