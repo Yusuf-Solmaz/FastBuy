@@ -1,6 +1,7 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.presentation.authPage
 
 import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -53,6 +54,9 @@ fun LoginScreen(
     }
 
 
+    if  (authState.error != null){
+        Toast.makeText(context, "Incorrect username or password", Toast.LENGTH_SHORT).show()
+    }
 
     if (authState.isLoading) {
         Column(
@@ -62,7 +66,8 @@ fun LoginScreen(
         ) {
             Loader(resId = R.raw.loading_anim)
         }
-    } else {
+    }
+    else {
         Scaffold(modifier = Modifier.padding(18.dp)) {
             Column(
                 modifier = Modifier

@@ -25,6 +25,55 @@
 
             >
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/imageConstraintProduct"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/loadingAnimationView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/loading_anim" />
+
+                <ImageView
+                    android:id="@+id/productImage"
+                    android:layout_width="74dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="10dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.49"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.162"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                <TextView
+                    android:id="@+id/availabilityStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="TextView"
+                    app:layout_constraintEnd_toEndOf="@+id/productImage"
+                    app:layout_constraintStart_toStartOf="@+id/productImage"
+                    app:layout_constraintTop_toBottomOf="@+id/productImage" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="24dp"
@@ -58,30 +107,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/title" />
 
-            <TextView
-                android:id="@+id/availabilityStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="7dp"
-                android:text="TextView"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/productImage"
-                app:layout_constraintStart_toStartOf="@+id/productImage" />
 
-            <ImageView
-                android:id="@+id/productImage"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="45dp"
-                android:layout_marginBottom="7dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintBottom_toTopOf="@+id/availabilityStatus"
-                app:layout_constraintEnd_toStartOf="@+id/title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+
+
 
             <TextView
                 android:id="@+id/title"

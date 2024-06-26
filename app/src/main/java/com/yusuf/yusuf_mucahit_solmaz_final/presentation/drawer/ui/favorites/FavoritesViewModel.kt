@@ -54,11 +54,19 @@ class FavoritesViewModel @Inject constructor(
     }
 
 
-    fun removeFavorite(product: FavoriteProducts) {
-        viewModelScope.launch {
-            Log.d("product", "addOrRemoveFavorite: $product")
-            favoriteProductsDao.deleteProduct(product.productId)
-            getFavoriteProducts()
-        }
+    fun removeFavorite(product: FavoriteProducts, onError: (String) -> Unit) {
+       try {
+           viewModelScope.launch {
+               Log.d("product", "addOrRemoveFavorite: $product")
+               favoriteProductsDao.deleteProduct(product.productId)
+               getFavoriteProducts()
+           }
+       }
+       catch (e:Exception){
+           e.localizedMessage?.let {
+               onError(it)
+           }
+       }
+
     }
 }

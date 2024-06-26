@@ -48,9 +48,9 @@ class SettingsFragment : Fragment() {
                 loadBackgroundColor(requireContext()) { color ->
                     view.setBackgroundColor(Color.parseColor(color))
                 }
-                Toast.makeText(context, "Arka plan rengi başarıyla güncellendi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Background color updated successfully.", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(context, "Arka plan rengini güncelleme başarısız oldu", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Background color update failed.", Toast.LENGTH_SHORT).show()
             }
         }
     }

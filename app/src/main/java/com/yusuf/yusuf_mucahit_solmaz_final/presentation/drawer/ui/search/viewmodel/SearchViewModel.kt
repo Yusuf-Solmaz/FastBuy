@@ -59,6 +59,7 @@ class SearchViewModel @Inject constructor(
         }
     fun addToCart(addCartRequest: AddCartRequest) {
         _searchAddToCart.value = SearchAddToCartState(isLoading = true)
+
         viewModelScope.launch {
             addToCartUseCase.addToCart(addCartRequest).collect { result ->
                 when (result) {

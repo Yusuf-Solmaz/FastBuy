@@ -24,12 +24,6 @@ class CartViewModel @Inject constructor(
     private val _cart = MutableLiveData<CartState>()
     val cart: LiveData<CartState> = _cart
 
-
-    init{
-        Log.d("session", "init: ${session.getUserId()}")
-    }
-
-
     fun getUserCart() {
         _cart.value = CartState(isLoading = true)
 

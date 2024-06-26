@@ -32,9 +32,9 @@ class HomeViewModel @Inject constructor(
             resetPagination()
         }
 
-
         isLoading = true
         _products.value = ProductState(isLoading = true)
+
         viewModelScope.launch {
             getProductUseCase.getProduct(30, currentPage * 30).collect { result ->
                 when (result) {

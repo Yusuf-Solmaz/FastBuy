@@ -77,6 +77,7 @@ class ProfileViewModel @Inject constructor(
 
     fun updateUserProfile(profileRequest: UpdateUserProfileRequest) {
         _updateProfile.value = UpdateProfileState(isLoading = true)
+
         viewModelScope.launch {
             updateUserProfileUseCase.updateUserProfile(userId = session.getUserId(),request = profileRequest)
                 .collect { result ->

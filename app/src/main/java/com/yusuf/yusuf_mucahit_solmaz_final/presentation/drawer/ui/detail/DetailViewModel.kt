@@ -33,8 +33,9 @@ class DetailViewModel @Inject constructor(
     private val _addToCartState = MutableLiveData<AddToCartState>()
     val addToCartState: LiveData<AddToCartState> = _addToCartState
 
-    fun getProductById(id: String) {
+    fun getProductById(id: String,onError: (String) -> Unit) {
         _productDetail.value = DetailState(isLoading = true)
+
         viewModelScope.launch {
             getProductByIdUseCase.getProductById(id).collect { result ->
                 when (result) {
@@ -70,33 +71,51 @@ class DetailViewModel @Inject constructor(
                             )
                         )
 
-                        checkIfFavorite(id)
+                        checkIfFavorite(id, onError)
                     }
                 }
             }
         }
     }
 
-    private fun checkIfFavorite(id: String) {
-        viewModelScope.launch {
-            _isFavorite.value = favoriteProductsDao.isProductFavorite(id.toInt())
+    private fun checkIfFavorite(id: String,onError: (String) -> Unit) {
+        try {
+            viewModelScope.launch {
+                _isFavorite.value = favoriteProductsDao.isProductFavorite(id.toInt())
+            }
         }
+        catch (e:Exception){
+            e.localizedMessage?.let {
+                onError(it)
+            }
+        }
+
 
     }
 
-    fun addOrRemoveFavorite(product: FavoriteProducts) {
-        viewModelScope.launch {
-            if (_isFavorite.value == true) {
-                favoriteProductsDao.deleteProduct(product.productId)
-            } else {
-                favoriteProductsDao.insertProduct(product)
+    fun addOrRemoveFavorite(product: FavoriteProducts,onError: (String) -> Unit) {
+
+        try {
+            viewModelScope.launch {
+                if (_isFavorite.value == true) {
+                    favoriteProductsDao.deleteProduct(product.productId)
+                } else {
+                    favoriteProductsDao.insertProduct(product)
+                }
+                checkIfFavorite(product.productId.toString(), onError)
             }
-            checkIfFavorite(product.productId.toString())
         }
+        catch (e:Exception){
+            e.localizedMessage?.let {
+                onError(it)
+            }
+        }
+
     }
 
     fun addToCart(addCartRequest: AddCartRequest) {
         _addToCartState.value = AddToCartState(isLoading = true)
+
         viewModelScope.launch {
             addToCartUseCase.addToCart(addCartRequest).collect { result ->
                 when (result) {
