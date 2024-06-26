@@ -9,7 +9,7 @@
 
 <table>
   <tr>
-    <td><img src="https://github.com/Yusuf-Solmaz/Turkcell_Final_Case/assets/83172478/f39aebfb-af2c-4d1e-8ea8-5b69f721d982" alt="Image 1"></td>
+    <td><img src="https://github.com/Yusuf-Solmaz/Turkcell_Final_Case/assets/83172478/12aefd0f-b164-4b8d-b9c3-e063ec48bab4" alt="Image 1"></td>
     <td><img src="https://github.com/Yusuf-Solmaz/Turkcell_Final_Case/assets/83172478/f39aebfb-af2c-4d1e-8ea8-5b69f721d982" alt="Image 2"></td>
   </tr>
 </table>
