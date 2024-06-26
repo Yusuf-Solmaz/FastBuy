@@ -9,8 +9,8 @@
 
 <table>
   <tr>
-    <td><img src="https://github.com/Yusuf-Solmaz/Turkcell_Final_Case/assets/83172478/75fc64f3-9b08-4cdb-9d9c-ce92f5f745b3" alt="Image 1"></td>
-    <td><img src="https://github.com/Yusuf-Solmaz/Turkcell_Final_Case/assets/83172478/61390650-a9a1-4628-8239-4903cc96745a" alt="Image 2"></td>
+    <td><img src="https://github.com/Yusuf-Solmaz/Turkcell_Final_Case/assets/83172478/f39aebfb-af2c-4d1e-8ea8-5b69f721d982" alt="Image 1"></td>
+    <td><img src="" alt="Image 2"></td>
   </tr>
 </table>
 
