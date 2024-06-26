@@ -17,6 +17,7 @@
 ## Dependencies Used
 --------------------------------
 * [Jetpack Compose](https://developer.android.com/develop/ui/compose)
+* [XML](https://developer.android.com/develop/ui/views/layout/declaring-layout?hl=en)
 * [Firebase Config](https://firebase.google.com/docs/remote-config?hl=en)
 * [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging?hl=en)
 * [DataStore](https://developer.android.com/topic/libraries/architecture/datastore)
@@ -29,7 +30,7 @@
 * [Navigation Component](https://developer.android.com/guide/navigation/navigation-getting-started)
 * [Navigation Safe Args](https://developer.android.com/guide/navigation/use-graph/safe-args)
 * [NotificationManager](https://developer.android.com/reference/android/app/NotificationManager)
-* [Coroutines](https://developer.android.com/kotlin/coroutines?hl=tr)
+* [Coroutines](https://developer.android.com/kotlin/coroutines?hl=en)
 * [Flow](https://developer.android.com/kotlin/flow)
 * [MutableLiveData](https://developer.android.com/reference/android/arch/lifecycle/MutableLiveData)
 * [View Binding](https://developer.android.com/topic/libraries/view-binding)
