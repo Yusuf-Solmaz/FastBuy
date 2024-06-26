@@ -12,6 +12,7 @@ import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.profile.Update
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.userCart.RootUserCart
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
@@ -60,5 +61,8 @@ interface ApiService {
 
     @GET("products/search")
     suspend fun searchProduct(@Query("q") query: String): Response<RootProductResponse>
+
+    @DELETE("carts/{id}")
+    suspend fun deleteCart(@Path("id") cartId: Int): Response<Unit>
 
 }
