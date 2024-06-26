@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.createDialog
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setVisibility
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.FragmentCartBinding
@@ -93,8 +94,20 @@ class CartFragment : Fragment() {
 
                 binding.payButton.setOnClickListener(::showConfirmationDialog)
 
-
+                binding.icDelete.setOnClickListener(::showDeleteCartConfirmationDialog)
             }
+
+        })
+
+        viewModel.deleteCart.observe(viewLifecycleOwner, Observer { state ->
+            setVisibility(
+                isLoading = state.isLoading,
+                isError = state.error != null,
+                isSuccess = state.success,
+                loadingView = binding.profileLoadingErrorComponent.loadingLayout,
+                errorView = binding.profileLoadingErrorComponent.errorLayout,
+                successView = binding.cartLayout
+            )
 
         })
 
@@ -105,20 +118,19 @@ class CartFragment : Fragment() {
         viewModel.getUserCart()
     }
 
+    private fun showDeleteCartConfirmationDialog(view: View?) {
+        createDialog(requireContext(), "Are you sure you want to delete the cart?","Cart Deleted Successfully"){
+            val action = CartFragmentDirections.actionNavCartToNavHome()
+            findNavController().navigate(action)
+        }
+    }
+
     private fun showConfirmationDialog(view: View?) {
         if (totalPrice >0){
-            AlertDialog.Builder(requireContext())
-                .setMessage("Do you want to proceed with the transaction?")
-                .setPositiveButton("Yes") { dialog, which ->
-                    Toast.makeText(requireContext(), "Transaction successful", Toast.LENGTH_SHORT).show()
-                    val action = CartFragmentDirections.actionNavCartToNavHome()
-                    findNavController().navigate(action)
-                }
-                .setNegativeButton("No") { dialog, which ->
-                    dialog.dismiss()
-                }
-                .create()
-                .show()
+            createDialog(requireContext(), "Are you sure you want to proceed with the transaction?","Transaction Successful"){
+                val action = CartFragmentDirections.actionNavCartToNavHome()
+                findNavController().navigate(action)
+            }
         }
         else{
             Toast.makeText(requireContext(), "The cart is empty", Toast.LENGTH_SHORT).show()
