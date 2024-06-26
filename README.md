@@ -73,9 +73,11 @@ git clone https://github.com/Yusuf-Solmaz/Turkcell_Final_Case
 --------------------------------
 
 username: emilys
+
 password: emilyspass
 
 username: oliviaw
+
 password: oliviawpass 
 
 ## Contact With Me
