@@ -11,7 +11,7 @@
         android:id="@+id/emptyListText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="You haven't added any favorites yet"
+        android:text="@string/fav_empty_list_error"
         android:textColor="#FF0000"
         android:textSize="25sp"
         android:textStyle="bold"

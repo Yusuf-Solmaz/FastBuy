@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
+import com.yusuf.yusuf_mucahit_solmaz_final.R
 
 
 object ViewUtils {
@@ -53,18 +54,18 @@ object ViewUtils {
     fun createDialog(context:Context,message:String, successMessage:String, onSuccess:()->Unit){
         AlertDialog.Builder(context)
             .setMessage(message)
-            .setPositiveButton("Yes") { dialog, which ->
+            .setPositiveButton(context.getString(R.string.yes)) { dialog, which ->
                 Toast.makeText(context, successMessage, Toast.LENGTH_SHORT).show()
                 onSuccess()
             }
-            .setNegativeButton("No") { dialog, which ->
+            .setNegativeButton(context.getString(R.string.no)) { dialog, which ->
                 dialog.dismiss()
             }
             .create()
             .show()
     }
 
-    fun setUpGlide(context: Context, imageUrl:String, productImage: ImageView, loadingAnimationView: LottieAnimationView?){
+    fun setupGlide(context: Context, imageUrl:String, productImage: ImageView, loadingAnimationView: LottieAnimationView?){
         Glide.with(context)
             .load(imageUrl)
             .listener(loadingAnimationView?.let { GlideLoaderUtils().with(it, productImage) })

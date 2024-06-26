@@ -43,10 +43,9 @@ class TransactionsActivity: AppCompatActivity() {
     @Inject
     lateinit var session: UserSessionRepository
 
-
-
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivityTransactionsBinding
+    private var _binding: ActivityTransactionsBinding? = null
+    private val binding get() = _binding!!
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +53,7 @@ class TransactionsActivity: AppCompatActivity() {
 
         enableEdgeToEdge()
 
-        binding = ActivityTransactionsBinding.inflate(layoutInflater)
+        _binding = ActivityTransactionsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         window.statusBarColor = Color.WHITE
@@ -124,5 +123,10 @@ class TransactionsActivity: AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

@@ -1,6 +1,6 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.data.local.model
 
-import android.media.Image
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 

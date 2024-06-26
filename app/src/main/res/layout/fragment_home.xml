@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Sale"
+                android:text="@string/sale"
                 android:textSize="30sp"
                 app:layout_constraintStart_toStartOf="@+id/saleRecyclerView"
                 app:layout_constraintTop_toBottomOf="@+id/carouselRecyclerview" />
@@ -73,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="All Products"
+                android:text="@string/all_products"
                 android:textColor="@color/mainBlue"
                 android:textSize="30sp"
                 android:textStyle="bold"

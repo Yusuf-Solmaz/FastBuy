@@ -1,27 +1,24 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.di
 
-import android.content.Context
-import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.SessionManager
-import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.repo.UserSessionRepository
+
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.network.ApiService
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.addToCart.AddToCartUseCase
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.deleteCart.DeleteCartUseCase
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getCurrentUser.GetCurrentUserUseCase
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getProductById.GetProductByIdUseCase
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getProductUseCase.GetProductUseCase
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getProductsByCategory.GetProductsByCategoryUseCase
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getProductsCategory.GetProductsCategoryUseCase
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getUserCart.GetUserCartUseCase
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getUserProfile.GetUserProfileUseCase
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.login.LoginUseCase
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.searchProduct.SearchProductUseCase
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.updateUserProfile.UpdateUserProfileUseCase
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.userUseCases.addToCart.AddToCartUseCase
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.userUseCases.deleteCart.DeleteCartUseCase
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.userUseCases.getCurrentUser.GetCurrentUserUseCase
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.productUseCases.getProductById.GetProductByIdUseCase
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.productUseCases.getProductUseCase.GetProductUseCase
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.productUseCases.getProductsByCategory.GetProductsByCategoryUseCase
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.productUseCases.getProductsCategory.GetProductsCategoryUseCase
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.userUseCases.getUserCart.GetUserCartUseCase
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.userUseCases.getUserProfile.GetUserProfileUseCase
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.authUseCases.login.LoginUseCase
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.productUseCases.searchProduct.SearchProductUseCase
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.userUseCases.updateUserProfile.UpdateUserProfileUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+
 
 
 @Module
@@ -50,12 +47,12 @@ object AppModule {
     }
 
     @Provides
-    fun addToCart(apiService: ApiService): AddToCartUseCase{
+    fun addToCart(apiService: ApiService): AddToCartUseCase {
         return AddToCartUseCase(apiService)
     }
 
     @Provides
-    fun getUserCard(apiService: ApiService): GetUserCartUseCase{
+    fun getUserCard(apiService: ApiService): GetUserCartUseCase {
         return GetUserCartUseCase(apiService)
     }
 

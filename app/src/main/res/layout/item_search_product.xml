@@ -43,6 +43,7 @@
 
 
     <TextView
+        android:textStyle="bold"
         android:id="@+id/title"
         android:layout_width="216dp"
         android:layout_height="50dp"
@@ -110,6 +111,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
 
     <Button
+        android:textColor="@color/white"
         android:id="@+id/addToCartBtn"
         android:layout_width="140dp"
         android:layout_height="22dp"

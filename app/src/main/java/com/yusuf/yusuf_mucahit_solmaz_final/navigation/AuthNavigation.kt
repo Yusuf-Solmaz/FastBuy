@@ -11,7 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.yusuf.paparafinalcase.presentation.onBoardingScreen.OnBoardingScreen
 import com.yusuf.yusuf_mucahit_solmaz_final.R
-import com.yusuf.yusuf_mucahit_solmaz_final.presentation.SplashScreen.SplashScreen
+import com.yusuf.yusuf_mucahit_solmaz_final.presentation.splashScreen.SplashScreen
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.authPage.LoginScreen
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.components.LoadingLottie
 

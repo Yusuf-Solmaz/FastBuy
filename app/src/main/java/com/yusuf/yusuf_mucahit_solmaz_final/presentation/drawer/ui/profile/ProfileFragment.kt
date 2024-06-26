@@ -3,29 +3,26 @@ package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.profile
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.yusuf.yusuf_mucahit_solmaz_final.R
-import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.gone
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setVisibility
-import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.visible
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.profile.UpdateUserProfileRequest
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.updateUI
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.FragmentProfileBinding
+import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.profile.viewmodel.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
-    private lateinit var binding: FragmentProfileBinding
+    private  var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding!!
     private val viewModel: ProfileViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,20 +33,29 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentProfileBinding.inflate(inflater, container, false)
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        loadBackgroundColor(requireContext()) { color ->
-            view.setBackgroundColor(Color.parseColor(color))
-        }
+        setupUI()
 
         viewModel.getUserProfile()
 
+        setupObservers()
 
+    }
+
+    private fun setupUI(){
+        loadBackgroundColor(requireContext()) {
+            color ->
+            view?.setBackgroundColor(Color.parseColor(color))
+        }
+    }
+
+    private fun setupObservers(){
 
         viewModel.profile.observe(viewLifecycleOwner) { state ->
 
@@ -102,5 +108,10 @@ class ProfileFragment : Fragment() {
             password = binding.password.text.toString()
         )
         viewModel.updateUserProfile(request)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

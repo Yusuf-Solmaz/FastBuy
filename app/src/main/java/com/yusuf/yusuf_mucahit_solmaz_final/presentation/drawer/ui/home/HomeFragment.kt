@@ -3,7 +3,6 @@ package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,13 +19,12 @@ import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setVisibility
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.visible
 import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.SessionManager
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.product.Product
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.updateUI
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.FragmentHomeBinding
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home.adapter.CarouselAdapter
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home.adapter.ProductAdapter
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home.adapter.SaleAdapter
+import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.random.Random
 
@@ -62,11 +60,30 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        loadBackgroundColor(requireContext()) { color ->
-            view.setBackgroundColor(Color.parseColor(color))
+        sessionManager = SessionManager.getInstance(requireContext())
+
+        setupUI()
+
+        val categoryName = args.category
+
+        if (categoryName == "default") {
+            homeViewModel.getProduct()
+        } else {
+            categoryName?.let {
+
+                homeViewModel.getProductsByCategory(it)
+            }
         }
 
-        sessionManager = SessionManager.getInstance(requireContext())
+        setupObservers()
+    }
+
+    private fun setupUI() {
+
+        loadBackgroundColor(requireContext()) {
+            color ->
+            view?.setBackgroundColor(Color.parseColor(color))
+        }
 
         productAdapter = ProductAdapter(allProducts, requireContext())
         binding.rvProducts.apply {
@@ -100,19 +117,10 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = saleAdapter
         }
+    }
 
-        val categoryName = args.category
-
-
-        if (categoryName == "default") {
-            homeViewModel.getProduct()
-        } else {
-            categoryName?.let {
-
-                homeViewModel.getProductsByCategory(it)
-            }
-        }
-
+    @SuppressLint("NotifyDataSetChanged")
+    private fun setupObservers() {
         homeViewModel.products.observe(viewLifecycleOwner, Observer { state ->
 
             isLastPage = state.productResponse?.products?.isEmpty() == true

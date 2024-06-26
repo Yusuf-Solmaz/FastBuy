@@ -1,11 +1,9 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.cart
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,12 +19,15 @@ import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setVisibility
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.FragmentCartBinding
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.cart.adapter.CartAdapter
+import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.cart.viewmodel.CartViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CartFragment : Fragment() {
 
-    private lateinit var binding: FragmentCartBinding
+    private var _binding: FragmentCartBinding? = null
+    private val binding get() = _binding!!
+
     private val viewModel: CartViewModel by viewModels()
     private lateinit var cartAdapter: CartAdapter
     private var totalPrice = 0
@@ -40,7 +41,7 @@ class CartFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentCartBinding.inflate(inflater, container, false)
+        _binding = FragmentCartBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -48,19 +49,30 @@ class CartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        loadBackgroundColor(requireContext()){
-                color->
-            view.setBackgroundColor(Color.parseColor(color))
-        }
-
         viewModel.getUserCart()
 
-         cartAdapter = CartAdapter(arrayListOf(), requireContext())
+        setupUI()
+        setupObservers()
+
+    }
+
+    private fun setupUI() {
+
+        loadBackgroundColor(requireContext()){
+            color->
+            view?.setBackgroundColor(Color.parseColor(color))
+        }
+
+        cartAdapter = CartAdapter(arrayListOf(), requireContext())
         binding.rvCart.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = cartAdapter
         }
+    }
 
+
+    @SuppressLint("SetTextI18n")
+    private fun setupObservers() {
         viewModel.cart.observe(viewLifecycleOwner, Observer { state ->
 
             setVisibility(
@@ -111,12 +123,6 @@ class CartFragment : Fragment() {
             )
 
         })
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.getUserCart()
     }
 
     private fun showDeleteCartConfirmationDialog(view: View?) {
@@ -138,4 +144,17 @@ class CartFragment : Fragment() {
         }
 
     }
+
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getUserCart()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+
 }

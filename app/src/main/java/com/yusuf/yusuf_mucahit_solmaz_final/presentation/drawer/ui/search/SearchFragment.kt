@@ -1,26 +1,20 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.search
 
-import android.content.Context
+
 import android.graphics.Color
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yusuf.yusuf_mucahit_solmaz_final.R
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setVisibility
-import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.SessionManager
 import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.repo.UserSessionRepository
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.updateUI
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.FragmentSearchBinding
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.search.adapter.SearchProductAdapter
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.search.viewmodel.SearchViewModel
@@ -33,7 +27,8 @@ class SearchFragment : Fragment() {
     @Inject
     lateinit var session: UserSessionRepository
 
-    private lateinit var binding: FragmentSearchBinding
+    private  var _binding: FragmentSearchBinding? = null
+    private val binding get() = _binding!!
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var searchProductAdapter: SearchProductAdapter
 
@@ -46,47 +41,16 @@ class SearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSearchBinding.inflate(inflater, container, false)
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        loadBackgroundColor(requireContext()) { color ->
-            view.setBackgroundColor(Color.parseColor(color))
-        }
-
-
-
         viewModel.searchProducts("")
 
-        searchProductAdapter = SearchProductAdapter(arrayListOf(), requireContext(), session) {
-            viewModel.addToCart(it)
-        }
-
-        viewModel.searchAddToCart.observe(viewLifecycleOwner) { state ->
-
-            setVisibility(
-                isLoading = state.isLoading,
-                isError = state.error != null,
-                isSuccess = state.success != null,
-                loadingView = binding.profileLoadingErrorComponent.loadingLayout,
-                errorView = binding.profileLoadingErrorComponent.errorLayout,
-                successView = binding.searchLayout
-            )
-
-            if (state.success != null) {
-                Toast.makeText(requireContext(), requireContext().getString(R.string.added_to_cart), Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        binding.rvSearchProduct.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = searchProductAdapter
-        }
-
-
+        setupUI()
 
         binding.searchView.setOnClickListener {
             binding.searchView.isIconified = false
@@ -104,6 +68,44 @@ class SearchFragment : Fragment() {
             }
         })
 
+        setupObservers()
+
+    }
+
+    private fun setupUI() {
+
+        loadBackgroundColor(requireContext()) {
+            color ->
+            view?.setBackgroundColor(Color.parseColor(color))
+        }
+
+        searchProductAdapter = SearchProductAdapter(arrayListOf(), requireContext(), session) {
+            viewModel.addToCart(it)
+        }
+
+        binding.rvSearchProduct.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = searchProductAdapter
+        }
+    }
+
+    private fun setupObservers(){
+        viewModel.searchAddToCart.observe(viewLifecycleOwner) { state ->
+
+            setVisibility(
+                isLoading = state.isLoading,
+                isError = state.error != null,
+                isSuccess = state.success != null,
+                loadingView = binding.profileLoadingErrorComponent.loadingLayout,
+                errorView = binding.profileLoadingErrorComponent.errorLayout,
+                successView = binding.searchLayout
+            )
+
+            if (state.success != null) {
+                Toast.makeText(requireContext(), requireContext().getString(R.string.added_to_cart), Toast.LENGTH_SHORT).show()
+            }
+        }
+
         viewModel.searchProduct.observe(viewLifecycleOwner) { state ->
 
             setVisibility(
@@ -115,10 +117,15 @@ class SearchFragment : Fragment() {
                 successView = binding.searchLayout
             )
 
-                if(state.productResponse != null){
-                    searchProductAdapter.updateSearchProduct(state.productResponse.products)
-                }
+            if(state.productResponse != null){
+                searchProductAdapter.updateSearchProduct(state.productResponse.products)
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
     }
 

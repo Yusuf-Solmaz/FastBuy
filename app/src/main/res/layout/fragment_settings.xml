@@ -9,56 +9,85 @@
     tools:context=".presentation.drawer.ui.settings.SettingsFragment">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewChangeLanguage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/background_color"
+        android:layout_marginTop="28dp"
+        android:text="@string/change_language"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnColorRed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:background="#FFFF5733"
-        android:text="@string/red"
-        android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnColorGreen" />
-
-    <Button
         android:id="@+id/btnColorGreen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="24dp"
         android:background="#FF4CAF50"
         android:text="@string/green"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnColorYellow" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/background_color"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLanguageEnglish" />
+
     <Button
-        android:id="@+id/btnColorBlue"
+        android:id="@+id/btnColorWhite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:background="#FF2196F3"
-        android:text="@string/blue"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/white_btn_bg"
+        android:text="@string/white"
+        android:textColor="@color/loading_component"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/btnColorRed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="#FFFF5733"
+        android:text="@string/red"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnColorRed" />
+        app:layout_constraintTop_toBottomOf="@+id/btnColorGreen" />
+
+    <Button
+        android:id="@+id/btnLanguageTurkish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="#00BCD4"
+        android:text="@string/turkish"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewChangeLanguage" />
 
     <Button
         android:id="@+id/btnColorYellow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="12dp"
         android:background="#FFFFEB3B"
         android:text="@string/yellow"
         android:textColor="@color/white"
@@ -68,48 +97,24 @@
         app:layout_constraintTop_toBottomOf="@+id/btnColorWhite" />
 
     <Button
-        android:id="@+id/btnColorWhite"
+        android:id="@+id/btnColorBlue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/white_btn_bg"
-        android:text="@string/white"
-        android:textColor="@color/loading_component"
+        android:layout_marginTop="12dp"
+        android:background="#FF2196F3"
+        android:text="@string/blue"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <TextView
-        android:id="@+id/textViewChangeLanguage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/change_language"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnColorBlue" />
+        app:layout_constraintTop_toBottomOf="@+id/btnColorRed" />
 
     <Button
-        android:background="#00BCD4"
-        android:id="@+id/btnLanguageTurkish"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/turkish"
-        android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewChangeLanguage" />
-
-    <Button
-        android:background="#00BCD4"
         android:id="@+id/btnLanguageEnglish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="12dp"
+        android:background="#00BCD4"
         android:text="@string/english"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"

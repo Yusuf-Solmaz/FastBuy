@@ -3,38 +3,22 @@ package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.search.adapt
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
-import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
+
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.yusuf.yusuf_mucahit_solmaz_final.R
-import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.GlideLoaderUtils
-import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.gone
-import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setUpGlide
-import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.visible
+import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setupGlide
 import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.repo.UserSessionRepository
 import com.yusuf.yusuf_mucahit_solmaz_final.data.mapper.toAddCartRequest
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.cart.AddCartRequest
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.product.Product
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.updateUI
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.ItemSearchProductBinding
-import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home.HomeFragmentDirections
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.search.SearchFragmentDirections
 import java.text.DecimalFormat
 
@@ -75,7 +59,7 @@ class SearchProductAdapter (private  val products: ArrayList<Product>, private v
 
             ratingBar.rating = product.rating.toFloat()
 
-            setUpGlide(context,product.images[0],productImage,loadingAnimationView)
+            setupGlide(context,product.images[0],productImage,loadingAnimationView)
 
             addToCartBtn.setOnClickListener {
                 showAddToCartDialog(product)

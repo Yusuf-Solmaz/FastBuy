@@ -1,7 +1,6 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.presentation.authPage
 
 import android.content.Intent
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,15 +23,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.yusuf.yusuf_mucahit_solmaz_final.R
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.authPage.viewModel.AuthViewModel
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.components.ButtonComponent
-
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.components.Loader
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.components.PasswordFieldComponent
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.components.TextFieldComponent
-import com.yusuf.yusuf_mucahit_solmaz_final.presentation.components.UnderLinedTextComponent
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.TransactionsActivity
 
 @Composable
@@ -52,8 +49,7 @@ fun LoginScreen(
         }
     }
 
-
-    if  (authState.error != null){
+    if (authState.error != null) {
         Toast.makeText(context, context.getString(R.string.login_error), Toast.LENGTH_SHORT).show()
     }
 
@@ -65,13 +61,13 @@ fun LoginScreen(
         ) {
             Loader(resId = R.raw.loading_anim)
         }
-    }
-    else {
+    } else {
         Scaffold(modifier = Modifier.padding(18.dp)) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(it),
+                    .padding(it)
+                    .imePadding(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -94,9 +90,6 @@ fun LoginScreen(
                 ButtonComponent(value = context.getString(R.string.loginButton), onClick = {
                     viewModel.login(email, password)
                 })
-
-
-
             }
         }
     }

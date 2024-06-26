@@ -3,11 +3,9 @@ package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.category.ada
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.category.RootCategoryItem
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.category.RootCategoryResponse
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.ItemCategoryBinding
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.category.CategoryFragmentDirections
 

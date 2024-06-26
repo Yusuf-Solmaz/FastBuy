@@ -7,9 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.GlideLoaderUtils
-import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setUpGlide
+import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setupGlide
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.product.Product
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.SaleItemBinding
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.home.HomeFragmentDirections
@@ -50,7 +48,7 @@ class SaleAdapter(private val context: Context, private val saleProducts: ArrayL
             saleItemOldPrice.text = ("($formattedPrice$)")
 
 
-            setUpGlide(context,saleProducts[position].images[0],saleImage,loadingAnimationView)
+            setupGlide(context,saleProducts[position].images[0],saleImage,loadingAnimationView)
         }
 
     }

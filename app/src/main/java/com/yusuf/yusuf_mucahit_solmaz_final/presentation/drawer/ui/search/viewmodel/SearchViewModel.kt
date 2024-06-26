@@ -1,16 +1,13 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.search.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.yusuf.yusuf_mucahit_solmaz_final.core.AppResult.GeneralResult
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.cart.AddCartRequest
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.addToCart.AddToCartUseCase
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.searchProduct.SearchProductUseCase
-import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.detail.AddToCartState
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.userUseCases.addToCart.AddToCartUseCase
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.productUseCases.searchProduct.SearchProductUseCase
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.search.state.SearchAddToCartState
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.search.state.SearchState
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -6,10 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.yusuf.yusuf_mucahit_solmaz_final.R
-import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.GlideLoaderUtils
-import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setUpGlide
+import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setupGlide
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.userCart.Product
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.ItemCartBinding
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.cart.CartFragmentDirections
@@ -36,7 +34,7 @@ class CartAdapter(private val products: ArrayList<Product>,private val context: 
             amount.text = "${context.getString(R.string.amount)}: ${products[position].quantity}"
             price.text = "${products[position].price}$"
 
-            setUpGlide(context,products[position].thumbnail,productImage,loadingAnimationView)
+            setupGlide(context,products[position].thumbnail,productImage,loadingAnimationView)
 
             root.setOnClickListener {
                 val action = CartFragmentDirections.actionNavCartToDetailFragment(products[position].id.toString())

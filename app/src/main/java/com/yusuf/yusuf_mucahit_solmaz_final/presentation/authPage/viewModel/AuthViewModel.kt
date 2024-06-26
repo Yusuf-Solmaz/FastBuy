@@ -11,7 +11,7 @@ import com.yusuf.yusuf_mucahit_solmaz_final.core.AppResult.GeneralResult
 import com.yusuf.yusuf_mucahit_solmaz_final.data.mapper.toCurrentUser
 
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.auth.LoginRequest
-import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.login.LoginUseCase
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.authUseCases.login.LoginUseCase
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.authPage.state.AuthState
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.authPage.state.SessionState
 import dagger.hilt.android.lifecycle.HiltViewModel

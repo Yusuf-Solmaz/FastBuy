@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,13 +12,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.yusuf.yusuf_mucahit_solmaz_final.R
-import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.GlideLoaderUtils
-import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setUpGlide
+import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setupGlide
 import com.yusuf.yusuf_mucahit_solmaz_final.core.utils.ViewUtils.setVisibility
 import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.repo.UserSessionRepository
 import com.yusuf.yusuf_mucahit_solmaz_final.data.mapper.toAddCartRequest
@@ -28,17 +26,19 @@ import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.responses.product.Produc
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remoteconfig.RemoteConfigManager.loadBackgroundColor
 import com.yusuf.yusuf_mucahit_solmaz_final.databinding.FragmentDetailBinding
 import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.detail.adapter.CommentsAdapter
+import com.yusuf.yusuf_mucahit_solmaz_final.presentation.drawer.ui.detail.viewmodel.DetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DetailFragment() : Fragment() {
+class DetailFragment : Fragment() {
 
     @Inject
     lateinit var session: UserSessionRepository
 
-    private lateinit var binding: FragmentDetailBinding
+    private  var _binding: FragmentDetailBinding? = null
+    private val binding get() = _binding!!
     private val viewModel: DetailViewModel by viewModels()
     private val args: DetailFragmentArgs by navArgs()
     private lateinit var commentAdapter: CommentsAdapter
@@ -51,7 +51,7 @@ class DetailFragment() : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDetailBinding.inflate(inflater, container, false)
+        _binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -59,9 +59,22 @@ class DetailFragment() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        setupUI()
+
+        val id = args.id
+        viewModel.getProductById(id){
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }
+
+        setupObservers()
+
+    }
+
+    private fun setupUI(){
         loadBackgroundColor(requireContext()){
-                color->
-            view.setBackgroundColor(Color.parseColor(color))
+            color->
+            view?.setBackgroundColor(Color.parseColor(color))
         }
 
         commentAdapter = CommentsAdapter(arrayListOf())
@@ -69,16 +82,10 @@ class DetailFragment() : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = commentAdapter
         }
+    }
 
-
-        val id = args.id
-
-
-        viewModel.getProductById(id){
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-        }
-
-
+    @SuppressLint("SetTextI18n")
+    private fun setupObservers(){
         viewModel.productDetail.observe(viewLifecycleOwner) { state ->
 
             setVisibility(
@@ -92,65 +99,65 @@ class DetailFragment() : Fragment() {
 
             if (state.productResponse != null){
 
-            binding.apply {
-                title.text = state.productResponse.title
-                productPrice.text = ("${state.productResponse.price}$")
-                discount.text = "(-%${state.productResponse.discountPercentage})"
-                rating.text = state.productResponse.rating.toString()
+                binding.apply {
+                    title.text = state.productResponse.title
+                    productPrice.text = ("${state.productResponse.price}$")
+                    discount.text = "(-%${state.productResponse.discountPercentage})"
+                    rating.text = state.productResponse.rating.toString()
 
 
-                setUpGlide(requireContext(),state.productResponse.images[0],productImage,loadingAnimationView)
+                    setupGlide(requireContext(),state.productResponse.images[0],productImage,loadingAnimationView)
 
-                description.text = state.productResponse.description
-                stock.text = "${requireContext().getString(R.string.in_stock)}: ${state.productResponse.stock}"
-                stock.setTextColor(
-                    if (state.productResponse.availabilityStatus == "Low Stock") {
-                        resources.getColorStateList(R.color.statusRed)
-                    } else {
-                        resources.getColorStateList(R.color.statusGreen)
-                    }
-                )
-
-                commentAdapter.updateComments(state.productResponse.reviews)
-
-                textView2.paintFlags = textView2.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-
-                val oldPrice =
-                    state.productResponse.price / (1 - state.productResponse.discountPercentage / 100)
-                val decimalFormat = DecimalFormat("#.##")
-                val formattedPrice = decimalFormat.format(oldPrice)
-                textView2.text = ("$formattedPrice$")
-
-
-                viewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
-
-                    binding.checkBox.setOnCheckedChangeListener(null)
-                    binding.checkBox.isChecked = isFavorite
-
-                    binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
-                        val favoriteProduct = state.productResponse.toFavoriteProduct()
-                        if (isChecked) {
-                            viewModel.addOrRemoveFavorite(favoriteProduct){
-                                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                            }
+                    description.text = state.productResponse.description
+                    stock.text = "${requireContext().getString(R.string.in_stock)}: ${state.productResponse.stock}"
+                    stock.setTextColor(
+                        if (state.productResponse.availabilityStatus == "Low Stock") {
+                            AppCompatResources.getColorStateList(requireContext(), R.color.statusRed)
                         } else {
-                            viewModel.addOrRemoveFavorite(favoriteProduct){
-                                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                            AppCompatResources.getColorStateList(requireContext(), R.color.statusGreen)
+                        }
+                    )
+
+                    commentAdapter.updateComments(state.productResponse.reviews)
+
+                    textView2.paintFlags = textView2.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+
+                    val oldPrice =
+                        state.productResponse.price / (1 - state.productResponse.discountPercentage / 100)
+                    val decimalFormat = DecimalFormat("#.##")
+                    val formattedPrice = decimalFormat.format(oldPrice)
+                    textView2.text = ("$formattedPrice$")
+
+
+                    viewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
+
+                        binding.checkBox.setOnCheckedChangeListener(null)
+                        binding.checkBox.isChecked = isFavorite
+
+                        binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
+                            val favoriteProduct = state.productResponse.toFavoriteProduct()
+                            if (isChecked) {
+                                viewModel.addOrRemoveFavorite(favoriteProduct){
+                                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                                }
+                            } else {
+                                viewModel.addOrRemoveFavorite(favoriteProduct){
+                                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                                }
                             }
                         }
                     }
-                }
 
-                viewModel.addToCartState.observe(viewLifecycleOwner) { state ->
+                    viewModel.addToCartState.observe(viewLifecycleOwner) { state ->
 
-                    setVisibility(
-                        isLoading = state.isLoading,
-                        isError = state.error != null,
-                        isSuccess = state.success != null,
-                        loadingView = binding.profileLoadingErrorComponent.loadingLayout,
-                        errorView = binding.profileLoadingErrorComponent.errorLayout,
-                        successView = binding.detailLayout
-                    )
+                        setVisibility(
+                            isLoading = state.isLoading,
+                            isError = state.error != null,
+                            isSuccess = state.success != null,
+                            loadingView = binding.profileLoadingErrorComponent.loadingLayout,
+                            errorView = binding.profileLoadingErrorComponent.errorLayout,
+                            successView = binding.detailLayout
+                        )
 
                         if(state.success != null) {
                             Toast.makeText(requireContext(), requireContext().getString(R.string.added_to_cart), Toast.LENGTH_SHORT)
@@ -158,12 +165,12 @@ class DetailFragment() : Fragment() {
                         }
 
 
+                    }
+                }
+                binding.addToCart.setOnClickListener {
+                    showAddToCartDialog(product = state.productResponse)
                 }
             }
-            binding.addToCart.setOnClickListener {
-                showAddToCartDialog(product = state.productResponse)
-            }
-        }
 
         }
     }
@@ -197,8 +204,12 @@ class DetailFragment() : Fragment() {
 
 
         }
-
         dialog.show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
 
