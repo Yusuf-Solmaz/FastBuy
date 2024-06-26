@@ -1,6 +1,13 @@
 package com.yusuf.yusuf_mucahit_solmaz_final.core.utils
 
+import android.app.AlertDialog
+import android.content.Context
 import android.view.View
+import android.widget.ImageView
+import android.widget.Toast
+import com.airbnb.lottie.LottieAnimationView
+import com.bumptech.glide.Glide
+
 
 object ViewUtils {
     fun View.invisible(){
@@ -40,5 +47,27 @@ object ViewUtils {
             errorView.gone()
             successView.visible()
         }
+    }
+
+
+    fun createDialog(context:Context,message:String, successMessage:String, onSuccess:()->Unit){
+        AlertDialog.Builder(context)
+            .setMessage(message)
+            .setPositiveButton("Yes") { dialog, which ->
+                Toast.makeText(context, successMessage, Toast.LENGTH_SHORT).show()
+                onSuccess()
+            }
+            .setNegativeButton("No") { dialog, which ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
+
+    fun setUpGlide(context: Context, imageUrl:String, productImage: ImageView, loadingAnimationView: LottieAnimationView){
+        Glide.with(context)
+            .load(imageUrl)
+            .listener(GlideLoaderUtils().with(loadingAnimationView, productImage))
+            .into(productImage)
     }
 }
