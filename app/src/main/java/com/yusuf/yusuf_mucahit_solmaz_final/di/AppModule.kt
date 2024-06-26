@@ -5,6 +5,7 @@ import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.SessionManager
 import com.yusuf.yusuf_mucahit_solmaz_final.data.datastore.repo.UserSessionRepository
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.network.ApiService
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.addToCart.AddToCartUseCase
+import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.deleteCart.DeleteCartUseCase
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getCurrentUser.GetCurrentUserUseCase
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getProductById.GetProductByIdUseCase
 import com.yusuf.yusuf_mucahit_solmaz_final.data.remote.useCase.getProductUseCase.GetProductUseCase
@@ -84,4 +85,8 @@ object AppModule {
         return SearchProductUseCase(apiService)
     }
 
+    @Provides
+    fun providesDeleteCart(apiService: ApiService): DeleteCartUseCase {
+        return DeleteCartUseCase(apiService)
+    }
 }
