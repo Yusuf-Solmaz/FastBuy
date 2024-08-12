@@ -1,4 +1,5 @@
-# FastBuy <img src="https://img.shields.io/badge/-Kotlin-7c6fe1?style=flat&logo=kotlin&logoColor=white">
+# FastBuy <img src="https://img.shields.io/badge/-Kotlin-7c6fe1?style=flat&logo=kotlin&logoColor=white"> <img src="https://img.shields.io/badge/Jetpack_Compose-4285f4?style=flat&logo=jetpackcompose&logoColor=white"> <img src="https://img.shields.io/badge/%3C%2F%3E%20XML-blue">
+
 
 ## Introduction 
 --------------------------------
